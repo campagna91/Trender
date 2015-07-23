@@ -1,0 +1,47 @@
+/************************************************ 	INSERTION */
+
+/************************************************ 	LIST */
+
+/************************************************ 	DETAILS */
+
+#details{
+	margin:0 auto;
+	background-color: rgba(0,255,0,0.5);
+	border:1px solid black;
+	width:90%;
+	margin-top:20px;
+	height:300px;		
+	overflow: scroll;
+}
+#detailsActorUpdate h6{
+	margin:0 auto;
+	font-size:18px;
+	padding:10px;
+}
+
+#detailsActorUpdate{
+	background-color:rgba(0,0,0,0.8);
+	width:100%;
+	height:100px;
+	margin:0 auto;
+	color:white;
+	padding:10 0;
+}
+button#actorUpdate{
+	display:block;
+	margin:0 auto;
+	margin-top:10px;	
+}
+
+#details > table{
+	display:inline-block;
+	width:220px;
+	background:rgba(255,255,255,0.5);
+	color:white;
+	text-align: center;
+	padding:10px;
+	margin:0 20;
+	margin-top:10px;
+
+	max-height:250px;
+}

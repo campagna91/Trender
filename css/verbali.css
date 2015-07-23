@@ -1,0 +1,8 @@
+div#sidebar div#moduleInsertion table{
+	width:100%;
+	margin:0 auto;
+	text-align: center;
+}
+div#sidebar div#moduleInsertion table tr td select {
+	width:50%;
+}

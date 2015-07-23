@@ -1,0 +1,22 @@
+#moduleTestId{
+	font-size:0.0em;
+}
+#moduleTestIntegration{
+	background-color:rgba(51, 153, 51,0.7);
+	text-align: center;
+}
+#moduleTestIntegration textarea{
+	background-color:rgba(0,0,0,0.5);
+	color:white;
+	display:block;
+	width:95%;
+	margin:0 auto;
+}
+#moduleTestIntegration button {
+	display:block;
+	margin:0px auto;
+	margin-top:10px;
+	margin-left:20px;
+	margin-bottom: 20px;
+	padding:0 5;
+}
