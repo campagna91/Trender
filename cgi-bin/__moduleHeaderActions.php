@@ -13,4 +13,8 @@
 		<button id="export_p">Package e Classi</button>
 		<button id="export_tracciamento_p_r">Traccia Pack/Req</button>
 	</span>
+	<span>DP
+        <button id="export_dp">Classi e Metodi</button>
+        <button id="export_tracciamento_dp">Tracciamento</button>
+    </span>
 </div>

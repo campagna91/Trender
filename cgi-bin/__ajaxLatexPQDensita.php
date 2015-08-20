@@ -78,7 +78,7 @@ fwrite($GLOBALS['densita'],"\\end{longtable} \n \n");
 
 /*-------------------------------------------------------
 
-            DENSITA COMMENTI 
+            SODDISFACIMENTO METRICHE CLASSI
           
 -------------------------------------------------------*/
 
@@ -118,5 +118,57 @@ fwrite($GLOBALS['densita'],"\\rowcolor{white} \n");
 fwrite($GLOBALS['densita'],"\\caption{Soddisfacimento metriche: classi} \n");
 fwrite($GLOBALS['densita'],"\\end{longtable} \n \n");
 
-echo "ciao";
+/*-------------------------------------------------------
+
+          SODDISFACIMENTO METRICHE METODI 
+          
+-------------------------------------------------------*/
+
+// fwrite($GLOBALS['densita'],"\\subsubsection{Soddisfacimento metriche: metodi} \n");
+// fwrite($GLOBALS['densita'],"Per una rappresentazione più compatta della tabella, si descrive una legenda per
+// indicare le voci rappresentate nelle colonne: \n
+// \\begin{itemize} \n
+// \\item textbf{P}: tale sigla verrà utilizzata per indicare il numero di parametri formali contenuti nella dichiarazione di un metodo; \n
+// \\item textbf{C}: tale sigla verrà utilizzata per indicare l’indice di complessità ciclomatica di un metodo; \n
+// \\item textbf{A}: tale sigla verrà utilizzata per indicare l’indice di annidamento di un metodo; \n
+// \\item textbf{I}: tale sigla verrà utilizzata per indicare il numero di chiamate innestate di un metodo. \n \n");
+// fwrite($GLOBALS['requisiti'],"\\setcounter{secnumdepth}{0} \n");
+// fwrite($GLOBALS['requisiti'],"\\setcounter{tocdepth}{0} \n");
+// 
+// fwrite($GLOBALS['densita'],"\\vspace*{0.1em} \n");
+// fwrite($GLOBALS['densita'],"\\def\arraystretch{1.5}");
+// fwrite($GLOBALS['densita'],"\\rowcolors{2}{D}{P} \n");
+// fwrite($GLOBALS['densita'],"\\begin{longtable}{p{4cm}!{\VRule[1pt]}p{1.5cm}!{\VRule[1pt]}p{1.5cm}!{\VRule[1pt]}p{1.5cm}!{\VRule[1pt]}p{1.5cm}!{\VRule[1pt]}p{2.5cm}} \n");
+// fwrite($GLOBALS['densita'],"\\rowcolor{I} \n");
+// fwrite($GLOBALS['densita'],"\\color{white} \\textbf{Metodo} & \color{white} \\textbf{P} & \color{white} \\textbf{C} & \color{white} \\textbf{A} & \color{white} \\textbf{I} & \color{white} \\textbf{Esito}\\\\ \n");
+// fwrite($GLOBALS['densita'],"\\endfirsthead \n");
+// fwrite($GLOBALS['densita'],"\\rowcolor{I} \n");
+// fwrite($GLOBALS['densita'],"\\color{white} \\textbf{Metodo} & \color{white} \\textbf{P} & \color{white} \\textbf{C} & \color{white} \\textbf{A} & \color{white} \\textbf{I} & \color{white} \\textbf{Esito}\\\\ \n");
+// fwrite($GLOBALS['densita'],"\\endhead \n");
+// 
+// 
+// $kClass = "select * from Classi order by titolo";
+// $qClass = mysqli_query(connect(), $kClass) or die("errore recupero classi");
+// while($vClass = $qClass->fetch_array())
+// {
+//     if(substr($vClass[0],0,1) == "_")
+//         $vTitoloCheckUnder = substr($vClass[0],1);
+//     else
+//         $vTitoloCheckUnder = $vClass[0];
+//     fwrite($GLOBALS['package'], "\\myparcls{Classe \pkg{".$vClass[3]."::".$vTitoloCheckUnder."}}{\cls{".$vTitoloCheckUnder."}}\n");
+//     $kMetodo = "select * from ClassMethod where class = '$vClass[0]'";
+//     $qMetodo = mysqli_query(connect(), $kMetodo) or die("errore recupero metodi");
+//     while($vMetodo = $qMetodo->fetch_array())
+//     {
+//         fwrite($GLOBALS['package'], $vMetodo[1]." & ");
+//         
+//     }
+// }   
+// 
+// fwrite($GLOBALS['densita'],"\\rowcolor{white} \n");
+// fwrite($GLOBALS['densita'],"\\caption{Soddisfacimento metriche: classi} \n");
+// fwrite($GLOBALS['densita'],"\\end{longtable} \n \n");
+
+
+echo "Funzia";
 ?>

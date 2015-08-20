@@ -11,6 +11,12 @@ if(isset($_POST['id']))
 
 			<!-- tipo attributo -->
 			<option value="int">int</option>
+			<option value="date">date</option>
+			<option value="double">double</option>
+			<option value="double[]">double[]</option>
+			<option value="boolean">boolean</option>
+			<option value="string[]">string[]</option>
+			<option value="httpPromise">httpPromise</option>
 			<option value="string">string</option>
 			<option value="object">object</option>
 			<option value="object[]">object[]</option><?
@@ -45,6 +51,12 @@ if(isset($_POST['id']))
 
 			<!-- valori valori di ritorno-->
 			<option value="int">int</option>
+			<option value="date">date</option>
+			<option value="double">double</option>
+			<option value="double[]">double[]</option>
+			<option value="boolean">boolean</option>
+			<option value="string[]">boolean</option>
+			<option value="httpPromise">httpPromise</option>
 			<option value="string">string</option>
 			<option value="object">object</option>
 			<option value="object[]">object[]</option>
@@ -84,10 +96,16 @@ if(isset($_POST['id']))
 
 						<!-- valori valori di ritorno-->
 						<option value="int" <?if('int' == $vM[1]) echo "selected='selected'";?> >int</option>
-							<option value="string" <?if('string' == $vM[1]) echo "selected='selected'";?> >string</option>
-							<option value="object" <?if('object' == $vM[1]) echo "selected='selected'";?> >object</option>
-							<option value="object[]" <?if('object[]' == $vM[1]) echo "selected='selected'";?> >object[]</option>
-							<option value="void" <?if('void' == $vM[1]) echo "selected='selected'";?> >void</option><?
+						<option value="date" <?if('date' == $vM[1]) echo "selected='selected'";?> >date</option>
+						<option value="double" <?if('double' == $vM[1]) echo "selected='selected'";?> >double</option>
+						<option value="double[]" <?if('double[]' == $vM[1]) echo "selected='selected'";?> >double[]</option>
+						<option value="boolean" <?if('boolean' == $vM[1]) echo "selected='selected'";?> >boolean</option>
+						<option value="string[]" <?if('string[]' == $vM[1]) echo "selected='selected'";?> >string[]</option>
+						<option value="httpPromise" <?if('httpPromise' == $vM[1]) echo "selected='selected'";?> >httpPromise</option>
+						<option value="string" <?if('string' == $vM[1]) echo "selected='selected'";?> >string</option>
+						<option value="object" <?if('object' == $vM[1]) echo "selected='selected'";?> >object</option>
+						<option value="object[]" <?if('object[]' == $vM[1]) echo "selected='selected'";?> >object[]</option>
+						<option value="void" <?if('void' == $vM[1]) echo "selected='selected'";?> >void</option><?
 						$qType = mysqli_query(connect(), "select titolo from Classi");
 						while($vType = $qType->fetch_array())
 						{?>
@@ -120,6 +138,12 @@ if(isset($_POST['id']))
 
 								<!-- valori valori di ritorno-->
 								<option value="int" <?if('int' == $param[1]) echo "selected='selected'";?> >int</option>
+								<option value="date" <?if('date' == $param[1]) echo "selected='selected'";?> >date</option>
+								<option value="double" <?if('double' == $param[1]) echo "selected='selected'";?> >double</option>
+								<option value="double[]" <?if('double[]' == $param[1]) echo "selected='selected'";?> >double[]</option>
+								<option value="boolean" <?if('boolean' == $param[1]) echo "selected='selected'";?> >boolean</option>
+								<option value="string[]" <?if('string[]' == $param[1]) echo "selected='selected'";?> >string[]</option>
+								<option value="httpPromise" <?if('httpPromise' == $param[1]) echo "selected='selected'";?> >httpPromise</option>
 								<option value="string" <?if('string' == $param[1]) echo "selected='selected'";?> >string</option>
 								<option value="object" <?if('object' == $param[1]) echo "selected='selected'";?> >object</option>
 								<option value="object[]" <?if('object[]' == $param[1]) echo "selected='selected'";?> >object[]</option><?

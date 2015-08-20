@@ -79,7 +79,6 @@ function fetchRequisiti($type,$package,$class,$vTitoloCheckUnder){
 }
 
 //classi - requisiti
-  fwrite($GLOBALS['package'],"\\newpage \n");
   fwrite($GLOBALS['package'],"\\subsection{Tracciamento componenti-requisiti} \n");
   fwrite($GLOBALS['package'],"\\vspace*{0.1em} \n");
   fwrite($GLOBALS['package'],"\\def\arraystretch{1.5}");

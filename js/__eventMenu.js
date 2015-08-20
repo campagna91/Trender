@@ -93,7 +93,28 @@ $(document).on('click',"#metriche", function() {
 		}
 	});
 });
-
+$(document).on('click',"#export_dp", function() {
+    $.ajax({
+        url:'cgi-bin/__ajaxLatexDPPackageClassi.php',
+        type:'post',
+        cache:'false',
+        dataType:'html',
+        success:function(data){
+            notice("LATEX CLASSI + METODI stampato con successo. Grazie per aver scelto Trender+",0);  
+        }
+    });
+});
+$(document).on('click',"#export_tracciamento_dp", function() {
+    $.ajax({
+        url:'cgi-bin/__ajaxLatexDPTracClassReq.php',
+        type:'post',
+        cache:'false',
+        dataType:'html',
+        success:function(data){
+            notice("LATEX Tracking stampato con successo. Grazie per aver scelto Trender+",0);  
+        }
+    });
+});
 
 	
 

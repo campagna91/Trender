@@ -127,7 +127,11 @@ function stampaPackage($dad) {
           fwrite($GLOBALS['definizione'], "\\begin{itemize}\n");
           while($vMethod = $qMethod->fetch_array())
           {
-            fwrite($GLOBALS['definizione'], "\\item \\method{".$vMethod[1]."}(");
+            if(substr($vMethod[1],0,1)=='$')
+                $nomeMetodo = '\\'.$vMethod[1];
+            else
+                $nomeMetodo = $vMethod[1];
+            fwrite($GLOBALS['definizione'], "\\item \\method{".$nomeMetodo."}(");
             if($vMethod[2]!="")
             {
               $arg = explode(";",$vMethod[2]);

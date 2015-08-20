@@ -379,6 +379,78 @@ stampaRequisiti('F');
 stampaRequisiti('Q');
 stampaRequisiti('V');
 fclose($requisiti);
+
+//TABELLA RIEPILOGO
+
+
+global $requisitiFonte;
+$requisitiFonte = fopen('../latex/requisitiFonte.tex', 'w+')or die("file not found requisiti Fonte");
+
+$fO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'F' and substr(idR,2,1) = 0 ";
+$fD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'F' and substr(idR,2,1) = 2 ";
+$fZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'F' and substr(idR,2,1) = 1 ";
+
+$pO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'P' and substr(idR,2,1) = 0 ";
+$pD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'P' and substr(idR,2,1) = 2 ";
+$pZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'P' and substr(idR,2,1) = 1 ";
+
+$vO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'V' and substr(idR,2,1) = 0 ";
+$vD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'V' and substr(idR,2,1) = 2 ";
+$vZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'V' and substr(idR,2,1) = 1 ";
+
+$qO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'Q' and substr(idR,2,1) = 0 ";
+$qD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'Q' and substr(idR,2,1) = 2 ";
+$qZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'Q' and substr(idR,2,1) = 1 ";
+
+$qf0 = mysqli_query(connect(),$fO) or die("errore ".$fO);
+$qf1 = mysqli_query(connect(),$fD) or die("errore ".$fD);
+$qf2 = mysqli_query(connect(),$fZ) or die("errore ".$fZ);
+
+$qp0 = mysqli_query(connect(),$pO) or die("errore ".$pO);
+$qp1 = mysqli_query(connect(),$pD) or die("errore ".$pD);
+$qp2 = mysqli_query(connect(),$pZ) or die("errore ".$pZ);
+
+$qv0 = mysqli_query(connect(),$vO) or die("errore ".$vO);
+$qv1 = mysqli_query(connect(),$vD) or die("errore ".$vD);
+$qv2 = mysqli_query(connect(),$vZ) or die("errore ".$vZ);
+
+$qq0 = mysqli_query(connect(),$qO) or die("errore ".$qO);
+$qq1 = mysqli_query(connect(),$qD) or die("errore ".$qD);
+$qq2 = mysqli_query(connect(),$qZ) or die("errore ".$qZ);
+
+$vf0 = $qf0->fetch_array();
+$vf1 = $qf1->fetch_array();
+$vf2 = $qf2->fetch_array();
+
+$vp0 = $qp0->fetch_array();
+$vp1 = $qp1->fetch_array();
+$vp2 = $qp2->fetch_array();
+
+$vv0 = $qv0->fetch_array();
+$vv1 = $qv1->fetch_array();
+$vv2 = $qv2->fetch_array();
+
+$vq0 = $qq0->fetch_array();
+$vq1 = $qq1->fetch_array();
+$vq2 = $qq2->fetch_array();
+
+fwrite($GLOBALS['requisitiFonte'],"\\newpage \n");
+fwrite($GLOBALS['requisitiFonte'],"\\section{Riepilogo} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\begin{table}[h!] \n");
+fwrite($GLOBALS['requisitiFonte'],"\\centering \n");
+fwrite($GLOBALS['requisitiFonte'],"\\def\arraystretch{1.5} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolors{2}{P}{D}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\begin{tabular}{p{2cm}!{\VRule}p{2.5cm}!{\VRule}p{2.5cm}!{\VRule}p{2.5cm}!{\VRule}} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{I} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\color{white} \\textbf{Categoria} & \\color{white} \\textbf{Obbligatorio} & \\color{white} \\textbf{Desiderabile} & \\color{white} \\textbf{Opzionale}\\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"Funzionale & ".$vf0['totali']." & ".$vf1['totali']." & ".$vf2['totali']." \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"Prestazionale & ".$vp0['totali']." & ".$vp1['totali']." & ".$vp2['totali']." \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"Qualitativo & ".$vq0['totali']." & ".$vq1['totali']." & ".$vq2['totali']." \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"Vincolo & ".$vv0['totali']." & ".$vv1['totali']." & ".$vv2['totali']." \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"\\end{tabular} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\caption{Riepilogo dei requisiti}  \n");
+fwrite($GLOBALS['requisitiFonte'],"\\end{table} \n");
+
 /* ______________________________________
         
 
@@ -386,8 +458,6 @@ fclose($requisiti);
 
 ________________________________________ */
 
-global $requisitiFonte;
-$requisitiFonte = fopen('../latex/requisitiFonte.tex', 'w+')or die("file not found requisiti Fonte");
 function requisitiFonteRic($idReq)
 {
     $kReqFonte = "select * from Requisiti where padre = '$idReq' order by length(idR),substr(idR,3)";
@@ -511,6 +581,7 @@ function stampaRequisitiFonte($type)
 }
 
 fwrite($GLOBALS['requisitiFonte'],"\\newpage \n");
+fwrite($GLOBALS['requisitiFonte'],"\\section{Traccimento}\n");
 fwrite($GLOBALS['requisitiFonte'],"\\subsection{Tracciamento requisiti-fonte} \n");
 fwrite($GLOBALS['requisitiFonte'],"\\vspace*{0.1em} \n");
 fwrite($GLOBALS['requisitiFonte'],"\\def\arraystretch{1.5}");
@@ -756,112 +827,49 @@ fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{white} \n");
 fwrite($GLOBALS['requisitiFonte'],"\\caption{Tracciamento fonte-requisiti} \n");
 fwrite($GLOBALS['requisitiFonte'],"\\end{longtable} \n");
 
-//TABELLA RIEPILOGO
-
-$fO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'F' and substr(idR,2,1) = 0 ";
-$fD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'F' and substr(idR,2,1) = 2 ";
-$fZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'F' and substr(idR,2,1) = 1 ";
-
-$pO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'P' and substr(idR,2,1) = 0 ";
-$pD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'P' and substr(idR,2,1) = 2 ";
-$pZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'P' and substr(idR,2,1) = 1 ";
-
-$vO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'V' and substr(idR,2,1) = 0 ";
-$vD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'V' and substr(idR,2,1) = 2 ";
-$vZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'V' and substr(idR,2,1) = 1 ";
-
-$qO = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'Q' and substr(idR,2,1) = 0 ";
-$qD = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'Q' and substr(idR,2,1) = 2 ";
-$qZ = "select count(idR) as totali from Requisiti where substr(idR,3,1) = 'Q' and substr(idR,2,1) = 1 ";
-
-$qf0 = mysqli_query(connect(),$fO) or die("errore ".$fO);
-$qf1 = mysqli_query(connect(),$fD) or die("errore ".$fD);
-$qf2 = mysqli_query(connect(),$fZ) or die("errore ".$fZ);
-
-$qp0 = mysqli_query(connect(),$pO) or die("errore ".$pO);
-$qp1 = mysqli_query(connect(),$pD) or die("errore ".$pD);
-$qp2 = mysqli_query(connect(),$pZ) or die("errore ".$pZ);
-
-$qv0 = mysqli_query(connect(),$vO) or die("errore ".$vO);
-$qv1 = mysqli_query(connect(),$vD) or die("errore ".$vD);
-$qv2 = mysqli_query(connect(),$vZ) or die("errore ".$vZ);
-
-$qq0 = mysqli_query(connect(),$qO) or die("errore ".$qO);
-$qq1 = mysqli_query(connect(),$qD) or die("errore ".$qD);
-$qq2 = mysqli_query(connect(),$qZ) or die("errore ".$qZ);
-
-$vf0 = $qf0->fetch_array();
-$vf1 = $qf1->fetch_array();
-$vf2 = $qf2->fetch_array();
-
-$vp0 = $qp0->fetch_array();
-$vp1 = $qp1->fetch_array();
-$vp2 = $qp2->fetch_array();
-
-$vv0 = $qv0->fetch_array();
-$vv1 = $qv1->fetch_array();
-$vv2 = $qv2->fetch_array();
-
-$vq0 = $qq0->fetch_array();
-$vq1 = $qq1->fetch_array();
-$vq2 = $qq2->fetch_array();
-
-fwrite($GLOBALS['requisitiFonte'],"\\newpage \n");
-fwrite($GLOBALS['requisitiFonte'],"\\subsection{Riepilogo} \n");
-fwrite($GLOBALS['requisitiFonte'],"\\begin{table}[h!] \n");
-fwrite($GLOBALS['requisitiFonte'],"\\centering \n");
-fwrite($GLOBALS['requisitiFonte'],"\\def\arraystretch{1.5} \n");
-fwrite($GLOBALS['requisitiFonte'],"\\rowcolors{2}{P}{D}\n");
-fwrite($GLOBALS['requisitiFonte'],"\\begin{tabular}{p{2cm}!{\VRule}p{2.5cm}!{\VRule}p{2.5cm}!{\VRule}p{2.5cm}!{\VRule}} \n");
-fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{I} \n");
-fwrite($GLOBALS['requisitiFonte'],"\\color{white} \\textbf{Categoria} & \\color{white} \\textbf{Obbligatorio} & \\color{white} \\textbf{Desiderabile} & \\color{white} \\textbf{Opzionale}\\\\ \n");
-fwrite($GLOBALS['requisitiFonte'],"Funzionale & ".$vf0['totali']." & ".$vf1['totali']." & ".$vf2['totali']." \\\\ \n");
-fwrite($GLOBALS['requisitiFonte'],"Prestazionale & ".$vp0['totali']." & ".$vp1['totali']." & ".$vp2['totali']." \\\\ \n");
-fwrite($GLOBALS['requisitiFonte'],"Qualitativo & ".$vq0['totali']." & ".$vq1['totali']." & ".$vq2['totali']." \\\\ \n");
-fwrite($GLOBALS['requisitiFonte'],"Vincolo & ".$vv0['totali']." & ".$vv1['totali']." & ".$vv2['totali']." \\\\ \n");
-fwrite($GLOBALS['requisitiFonte'],"\\end{tabular} \n");
-fwrite($GLOBALS['requisitiFonte'],"\\caption{Riepilogo dei requisiti}  \n");
-fwrite($GLOBALS['requisitiFonte'],"\\end{table} \n");
-
 
 // Tracciamento requisiti accettati
 
-function requisitiAccettatiRic($id,$type){
-$kRequisito = "select * from Requisiti where substr(idR,3,1)='$type' and padre = '$id' order by length(idR),substr(idR,3)";
-$qRequisito = mysqli_query(connect(),$kRequisito) or die ("err req F");
-while($vRequisito = $qRequisito->fetch_array())
-{
-    if(substr($vRequisito[0],1,1)==0 || substr($vRequisito[0],1,1)==1 || substr($vRequisito[0],1,1)==2)
+function requisitiAccettatiRic($id,$type,$priority){
+    $kRequisito = "select * from Requisiti where substr(idR,3,1)='$type' and padre = '$id' order by length(idR),substr(idR,3)";
+    $qRequisito = mysqli_query(connect(),$kRequisito) or die ("err req F");
+    while($vRequisito = $qRequisito->fetch_array())
     {
-        fwrite($GLOBALS['requisitiFonte'], standardId($vRequisito[0])." & ".$vRequisito[2]." & ");
-        if($vRequisito[6]==0)
-            fwrite($GLOBALS['requisitiFonte'], "{\color{red}Non soddisfatto} \\\\ \n");
-        else
-            fwrite($GLOBALS['requisitiFonte'], "{\color{ForestGreen}Soddisfatto} \\\\ \n");  
-        }
-        requisitiAccettatiRic($vRequisito[0],$type);
+        if(substr($vRequisito[0],1,1)==$priority)
+        {
+            fwrite($GLOBALS['requisitiFonte'], standardId($vRequisito[0])." & ".$vRequisito[2]." & ");
+            if($vRequisito[6]==0)
+                fwrite($GLOBALS['requisitiFonte'], "{\color{red}Non soddisfatto} \\\\ \n");
+            else
+                fwrite($GLOBALS['requisitiFonte'], "{\color{ForestGreen}Soddisfatto} \\\\ \n");  
+        }   
+        requisitiAccettatiRic($vRequisito[0],$type,$priority);
     }
 }
 
-function requisitiAccettati($type){ 
-$kRequisito = "select * from Requisiti where substr(idR,3,1)='$type' and padre is NULL  order by length(idR),substr(idR,3)";
-$qRequisito = mysqli_query(connect(),$kRequisito) or die ("err req requisiti accettati");
-while($vRequisito = $qRequisito->fetch_array())
-{
-    if(substr($vRequisito[0],1,1)==0 || substr($vRequisito[0],1,1)==1 || substr($vRequisito[0],1,1)==2)
+function requisitiAccettati($type,$priority){ 
+    $kRequisito = "select * from Requisiti where substr(idR,3,1)='$type' and padre is NULL  order by length(idR),substr(idR,3)";
+    $qRequisito = mysqli_query(connect(),$kRequisito) or die ("err req requisiti accettati");
+    while($vRequisito = $qRequisito->fetch_array())
     {
-        fwrite($GLOBALS['requisitiFonte'], standardId($vRequisito[0])." & ".$vRequisito[2]." & ");
-        if($vRequisito[6]==0)
-            fwrite($GLOBALS['requisitiFonte'], "{\color{red}Non soddisfatto} \\\\ \n");
-        else
-            fwrite($GLOBALS['requisitiFonte'], "{\color{ForestGreen}Soddisfatto} \\\\ \n");  
-        }
-        requisitiAccettatiRic($vRequisito[0],$type);
+        if(substr($vRequisito[0],1,1)==$priority)
+        {
+            fwrite($GLOBALS['requisitiFonte'], standardId($vRequisito[0])." & ".$vRequisito[2]." & ");
+            if($vRequisito[6]==0)
+                fwrite($GLOBALS['requisitiFonte'], "{\color{red}Non soddisfatto} \\\\ \n");
+            else
+                fwrite($GLOBALS['requisitiFonte'], "{\color{ForestGreen}Soddisfatto} \\\\ \n");  
+        }   
+        requisitiAccettatiRic($vRequisito[0],$type,$priority);
     }
 }
 
 fwrite($GLOBALS['requisitiFonte'],"\\newpage \n");
 fwrite($GLOBALS['requisitiFonte'],"\\subsection{Requisiti accettati}\n");
+
+//-----------------------OBBLIGATORI---------------------
+
+fwrite($GLOBALS['requisitiFonte'],"\\subsubsection{Requisiti obbligatori}\n");
 fwrite($GLOBALS['requisitiFonte'],"\\def\arraystretch{1.5}\n");
 fwrite($GLOBALS['requisitiFonte'],"\\rowcolors{2}{D}{P}\n");
 fwrite($GLOBALS['requisitiFonte'],"\\begin{longtable}{p{3cm}!{\\VRule[1pt]}p{7cm}!{\\VRule[1pt]}p{3cm}!{\\VRule[1pt]}}\n");
@@ -871,25 +879,67 @@ fwrite($GLOBALS['requisitiFonte'],"\\endfirsthead \n");
 fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{I} \n");
 fwrite($GLOBALS['requisitiFonte'],"\\color{white} \\textbf{Requisito} & \\color{white} \\textbf{Descizione} & \\color{white} \\textbf{Esito} \\\\ \n");
 fwrite($GLOBALS['requisitiFonte'],"\\endhead \n");
-requisitiAccettati('F');
-requisitiAccettati('P');
-requisitiAccettati('Q');
-requisitiAccettati('V');
+requisitiAccettati('F',0);
+requisitiAccettati('P',0);
+requisitiAccettati('Q',0);
+requisitiAccettati('V',0);
 fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{white} \n");
-fwrite($GLOBALS['requisitiFonte'],"\\caption{Requisiti accettati} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\caption{Requisiti obbligatori accettati} \n");
 fwrite($GLOBALS['requisitiFonte'],"\\end{longtable} \n");
+
+//--------------DESIDERABILI-------------------
+
+fwrite($GLOBALS['requisitiFonte'],"\\subsubsection{Requisiti desiderabili}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\def\arraystretch{1.5}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolors{2}{D}{P}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\begin{longtable}{p{3cm}!{\\VRule[1pt]}p{7cm}!{\\VRule[1pt]}p{3cm}!{\\VRule[1pt]}}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{I}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\color{white} \\textbf{Requisito} & \\color{white} \\textbf{Descizione} & \\color{white} \\textbf{Esito} \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"\\endfirsthead \n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{I} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\color{white} \\textbf{Requisito} & \\color{white} \\textbf{Descizione} & \\color{white} \\textbf{Esito} \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"\\endhead \n");
+requisitiAccettati('F',2);
+requisitiAccettati('P',2);
+requisitiAccettati('Q',2);
+requisitiAccettati('V',2);
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{white} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\caption{Requisiti desiderabili accettati} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\end{longtable} \n");
+
+//-------------------OPZIONIALI--------------------
+
+fwrite($GLOBALS['requisitiFonte'],"\\subsubsection{Requisiti opzionali}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\def\arraystretch{1.5}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolors{2}{D}{P}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\begin{longtable}{p{3cm}!{\\VRule[1pt]}p{7cm}!{\\VRule[1pt]}p{3cm}!{\\VRule[1pt]}}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{I}\n");
+fwrite($GLOBALS['requisitiFonte'],"\\color{white} \\textbf{Requisito} & \\color{white} \\textbf{Descizione} & \\color{white} \\textbf{Esito} \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"\\endfirsthead \n");
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{I} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\color{white} \\textbf{Requisito} & \\color{white} \\textbf{Descizione} & \\color{white} \\textbf{Esito} \\\\ \n");
+fwrite($GLOBALS['requisitiFonte'],"\\endhead \n");
+requisitiAccettati('F',1);
+requisitiAccettati('P',1);
+requisitiAccettati('Q',1);
+requisitiAccettati('V',1);
+fwrite($GLOBALS['requisitiFonte'],"\\rowcolor{white} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\caption{Requisiti opzionali accettati} \n");
+fwrite($GLOBALS['requisitiFonte'],"\\end{longtable} \n");
+
+
 
 //-----------------------------TRACCIAMENTO REQUISITI-TEST----------------------------
 
 function requisitiTestRic($id,$type){
     $kRequisito = "select * from Requisiti where substr(idR,3,1)='$type' and padre = '$id' order by length(idR),substr(idR,3)";
-    $qRequisito = mysqli_query(connect(),$kRequisito) or die ("err req F");
+    $qRequisito = mysqli_query(connect(),$kRequisito) or die ("err recuper Requisiti");
     while($vRequisito = $qRequisito->fetch_array())
     {
-        $kTestVal = "select * from Test where object = '$vRequisito[0]' and type = 'validation'";
+        $kTestVal = "select * from RequirementTest where object = '$vRequisito[0]' and type = 'validation'";
         $qTestVal = mysqli_query(connect(), $kTestVal) or die("errore stampa validazione");
         
-        $kTestSist = "select * from Test where object = '$vRequisito[0]' and type = 'system'";
+        $kTestSist = "select * from RequirementTest where object = '$vRequisito[0]' and type = 'system'";
         $qTestSist = mysqli_query(connect(), $kTestSist) or die("err test sistema");
         
         if(mysqli_num_rows($qTestVal)>0 || mysqli_num_rows($qTestSist)>0)
@@ -920,10 +970,10 @@ function requisitiTest($type){
     $qRequisito = mysqli_query(connect(),$kRequisito) or die ("err req requisiti accettati");
     while($vRequisito = $qRequisito->fetch_array())
     {
-        $kTestVal = "select * from Test where object = '$vRequisito[0]' and type = 'validation'";
+        $kTestVal = "select * from RequirementTest where object = '$vRequisito[0]' and type = 'validation'";
         $qTestVal = mysqli_query(connect(), $kTestVal) or die("errore stampa validazione");
         
-        $kTestSist = "select * from Test where object = '$vRequisito[0]' and type = 'system'";
+        $kTestSist = "select * from RequirementTest where object = '$vRequisito[0]' and type = 'system'";
         $qTestSist = mysqli_query(connect(), $kTestSist) or die("err test sistema");
         
         if(mysqli_num_rows($qTestVal)>0 || mysqli_num_rows($qTestSist)>0)

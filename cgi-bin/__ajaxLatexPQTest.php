@@ -25,7 +25,7 @@ function stampaTestValidazioneRic($idR) {
     $q = mysqli_query(connect(), $k) or die("errore ciclico");
     while($v = $q->fetch_array())
     {
-    $kTest = "select * from Test where object = '$v[0]' and type = 'validation'";
+    $kTest = "select * from RequirementTest where object = '$v[0]' and type = 'validation'";
     $qTest = mysqli_query(connect(), $kTest) or die("errore stampa validazione");
     while($vTest = $qTest->fetch_array())
     {
@@ -34,8 +34,8 @@ function stampaTestValidazioneRic($idR) {
       $arg = explode($temp,$vTest[2]);
       $dim = count($arg);
       fwrite($GLOBALS['test'], $arg[0]." & \n All");
-      for($i=1;$i<$dim;$i++)
-	fwrite($GLOBALS['test'], $arg[$i]);
+      for($i=1;$i<$dim;$i++)   
+        fwrite($GLOBALS['test'], $arg[$i]);
       fwrite($GLOBALS['test'], "\\\\");
     }
     stampaTestValidazioneRic($v[0]);
@@ -48,7 +48,7 @@ function stampaTestValidazione($type) {
   $q = mysqli_query(connect(), $k) or die("errore ciclico");
   while($v = $q->fetch_array())
   {
-    $kTest = "select * from Test where object = '$v[0]' and type = 'validation'";
+    $kTest = "select * from RequirementTest where object = '$v[0]' and type = 'validation'";
     $qTest = mysqli_query(connect(), $kTest) or die("errore stampa validazione");
     while($vTest = $qTest->fetch_array())
     {
@@ -58,7 +58,7 @@ function stampaTestValidazione($type) {
       $dim = count($arg);
       fwrite($GLOBALS['test'], $arg[0]." & \n All");
       for($i=1;$i<$dim;$i++)
-	fwrite($GLOBALS['test'], $arg[$i]);
+        fwrite($GLOBALS['test'], $arg[$i]);
       fwrite($GLOBALS['test'], "\\\\");
     }
     stampaTestValidazioneRic($v[0]);
@@ -75,7 +75,7 @@ fwrite($GLOBALS['test'],"\\rowcolor{I} \n");
 fwrite($GLOBALS['test'],"\\color{white} \\textbf{Test} & \color{white} \\textbf{Descrizione} & \color{white} \\textbf{Operazioni} \\\\ \n");
 fwrite($GLOBALS['test'],"\\endhead \n");
 
-      stampaTestValidazione("F");
+stampaTestValidazione("F");
 stampaTestValidazione("Q");
 stampaTestValidazione("V");
 
@@ -86,12 +86,12 @@ fwrite($GLOBALS['test'],"\\end{longtable} \n \n");
 /* ______________________________________
 
 
-		TEST DI SISTEMA
+        TEST DI SISTEMA
 
 ________________________________________ */
 
 function testSistemaByType($type) {
-  $k = "select * from Test where type = 'system' and substr(object,3,1)='$type' order by length(object),substr(object,3)";
+  $k = "select * from RequirementTest where type = 'system' and substr(object,3,1)='$type' order by length(object),substr(object,3)";
   $q = mysqli_query(connect(), $k) or die("err test sistema");
   while($v = $q->fetch_array())
   {
@@ -106,7 +106,7 @@ fwrite($GLOBALS['test'], "\\newpage \n");
 fwrite($GLOBALS['test'], "\\setcounter{secnumdepth}{5}");
 fwrite($GLOBALS['test'], "\\setcounter{tocdepth}{5}");
 fwrite($GLOBALS['test'], "\\subsection{ Test di sistema }"." I test di sistema servono per accertarsi che il comportamento dinamico del sistema rispetti i requisiti software individuati e descritti nel documento \\ARdoc.");
-fwrite($GLOBALS['test'], "\\subsection{Descrizione dei test di sistema} \n");
+fwrite($GLOBALS['test'], "\\subsubsection{Descrizione dei test di sistema} \n");
 fwrite($GLOBALS['test'], "\\vspace*{0.1em} \n");
 fwrite($GLOBALS['test'], "\\def\arraystretch{1.5}");
 fwrite($GLOBALS['test'], "\\rowcolors{2}{D}{P} \n");
@@ -127,7 +127,7 @@ fwrite($GLOBALS['test'], "\\end{longtable} \n \n");
 /* ______________________________________
 
 
-	TEST DI INTEGRAZIONE
+    TEST DI INTEGRAZIONE
 
 ________________________________________ */
 
@@ -146,7 +146,7 @@ function after_last ($this, $inthat)
 
 fwrite($GLOBALS['test'],"\subsection{ Test di integrazione }"." I test di integrazione vengono utilizzati per verificare che tutti i componenti del sistema comunichino correttamente tra loro e che all'interno del software vi siano i dati attesi. Si utilizzaerà una strategia di integrazione incrementale per poter sviluppare e verificare più componenti in parallelo. Questo metodo da priorità ai test relativi alle componenti che vengono ritenute più importanti, permettendo così partire dalle componenti che soddisfano i requisiti obbligatori fino ad integrarli con le componenti che soddisfano i requisiti opzionali. Aiuta anche a restringere la ricerca dell’errore in caso di test fallito, in quanto sarà molto probabile che l’errore risulti dal nuovo componente o dalle sue interazioni con il sistema corrente.");
 
-fwrite($GLOBALS['test'], "\\subsection{Descrizione dei test di integrazione} \n");
+fwrite($GLOBALS['test'], "\\subsubsection{Descrizione dei test di integrazione} \n");
 fwrite($GLOBALS['test'], "\\vspace*{0.1em} \n");
 fwrite($GLOBALS['test'], "\\def\arraystretch{1.5}");
 fwrite($GLOBALS['test'], "\\rowcolors{2}{D}{P} \n");
@@ -157,16 +157,16 @@ fwrite($GLOBALS['test'], "\\endfirsthead \n");
 fwrite($GLOBALS['test'], "\\rowcolor{I} \n");
 fwrite($GLOBALS['test'], "\\color{white} \\textbf{Test} & \color{white} \\textbf{Descrizione} & \color{white} \\textbf{Componente} & \color{white} \\textbf{Stato}\\\\ \n");
 fwrite($GLOBALS['test'], "\\endhead \n");
-$k = "select * from Test where type = 'integration'";
+$k = "select * from PackageTest where type = 'integration'";
 $q = mysqli_query(connect(), $k) or die("err test integrazione");
 while($v = $q->fetch_array())
 {
-	$id = after_last (':',$v[1]);
-	if(!$id)
-	  $id = "premi";
-	fwrite($GLOBALS['test'], "TI".$id." & ".$v[2]." & \pkg{\seqsplit{".$v[1]."}} & ");
-	if($v[3]) fwrite($GLOBALS['test'], "IMPL. \\\\ \n");
-	else fwrite($GLOBALS['test'], "N.I. \\\\ \n");
+    $id = after_last (':',$v[1]);
+    if(!$id)
+      $id = "premi";
+    fwrite($GLOBALS['test'], "TI".$id." & ".$v[2]." & \pkg{\seqsplit{".$v[1]."}} & ");
+    if($v[3]) fwrite($GLOBALS['test'], "IMPL. \\\\ \n");
+    else fwrite($GLOBALS['test'], "N.I. \\\\ \n");
 }
 fwrite($GLOBALS['test'], "\\rowcolor{white} \n");
 fwrite($GLOBALS['test'], "\\caption{Tracciamento test di integrazione-componenti} \n");
@@ -174,9 +174,7 @@ fwrite($GLOBALS['test'], "\\end{longtable} \n \n");
 
 /* ______________________________________
       
-
       TRACCIAMENTO COMPONENTI-TEST DI INTEGRAZIONE
-  
 //   ________________________________________ */
   
 fwrite($GLOBALS['test'], "\\subsection{Tracciamento componenti-test di integrazione} \n");
@@ -190,7 +188,7 @@ fwrite($GLOBALS['test'], "\\endfirsthead \n");
 fwrite($GLOBALS['test'], "\\rowcolor{I} \n");
 fwrite($GLOBALS['test'], "\\color{white} \\textbf{Componente} & \color{white} \\textbf{Test} \\\\ \n");
 fwrite($GLOBALS['test'], "\\endhead \n");
-$k = "select * from Test where type = 'integration'";
+$k = "select * from PackageTest where type = 'integration'";
 $q = mysqli_query(connect(), $k) or die("err test integrazione");
 while($v = $q->fetch_array())
 {
@@ -202,4 +200,81 @@ while($v = $q->fetch_array())
 fwrite($GLOBALS['test'], "\\rowcolor{white} \n");
 fwrite($GLOBALS['test'], "\\caption{Tracciamento componenti-test di integrazione} \n");
 fwrite($GLOBALS['test'], "\\end{longtable} \n \n");
+
+
+/* ______________________________________
+      
+      TEST UNITA'
+//   ________________________________________ */
+
+fwrite($GLOBALS['test'],"\\subsection{Test di unità}");
+
+fwrite($GLOBALS['test'], "\\subsubsection{Descrizione dei test di unità} \n");
+fwrite($GLOBALS['test'], "\\vspace*{0.1em} \n");
+fwrite($GLOBALS['test'], "\\def\arraystretch{1.5}");
+fwrite($GLOBALS['test'], "\\rowcolors{2}{D}{P} \n");
+fwrite($GLOBALS['test'], "\\begin{longtable}{p{2cm}!{\VRule[1pt]}p{7cm}!{\VRule[1pt]}p{2cm}} \n");
+fwrite($GLOBALS['test'], "\\rowcolor{I} \n");
+fwrite($GLOBALS['test'], "\\color{white} \\textbf{Test} & \color{white} \\textbf{Descrizione} & \color{white} \\textbf{Esito} \\\\ \n");
+fwrite($GLOBALS['test'], "\\endfirsthead \n");
+fwrite($GLOBALS['test'], "\\rowcolor{I} \n");
+fwrite($GLOBALS['test'], "\\color{white} \\textbf{Test} & \color{white} \\textbf{Descrizione} & \color{white} \\textbf{Esito} \\\\ \n");
+fwrite($GLOBALS['test'], "\\endhead \n");
+$kUnit = "select * from UnitTest";
+$qUnit = mysqli_query(connect(), $kUnit) or die("err test integrazione");
+while($vUnit = $qUnit->fetch_array())
+{
+    fwrite($GLOBALS['test'], "TU".$vUnit[0]." & ".$vUnit[1]." & ");
+    if($vUnit[3]) 
+        fwrite($GLOBALS['test'], "IMPL. \\\\ \n");
+    else 
+        fwrite($GLOBALS['test'], "N.I. \\\\ \n");
+}
+fwrite($GLOBALS['test'], "\\rowcolor{white} \n");
+fwrite($GLOBALS['test'], "\\caption{Tracciamento test di unità} \n");
+fwrite($GLOBALS['test'], "\\end{longtable} \n \n");
+
+/* ______________________________________
+      
+      TEST UNITA'
+//   ________________________________________ */
+
+fwrite($GLOBALS['test'], "\\subsubsection{Tracciamento test di unità - classi.metodo} \n");
+fwrite($GLOBALS['test'], "\\vspace*{0.1em} \n");
+fwrite($GLOBALS['test'], "\\def\arraystretch{1.5}");
+fwrite($GLOBALS['test'], "\\rowcolors{2}{D}{P} \n");
+fwrite($GLOBALS['test'], "\\begin{longtable}{p{2cm}!{\VRule[1pt]}p{8cm}} \n");
+fwrite($GLOBALS['test'], "\\rowcolor{I} \n");
+fwrite($GLOBALS['test'], "\\color{white} \\textbf{Test} & \color{white} \\textbf{Classe.Metodo}\\\\ \n");
+fwrite($GLOBALS['test'], "\\endfirsthead \n");
+fwrite($GLOBALS['test'], "\\rowcolor{I} \n");
+fwrite($GLOBALS['test'], "\\color{white} \\textbf{Test} & \color{white} \\textbf{Classe.Metodo}\\\\ \n");
+fwrite($GLOBALS['test'], "\\endhead \n");
+$kUnit = "select * from UnitTest order by idUT";
+$qUnit = mysqli_query(connect(), $kUnit) or die("err test integrazione");
+while($vUnit = $qUnit->fetch_array())
+{
+    fwrite($GLOBALS['test'], "TU".$vUnit[0]." & ");
+    $arg = explode(";",$vUnit[2]);
+    $dim = count($arg);
+    if($dim==1)
+        fwrite($GLOBALS['test'], $arg[0]." \\\\ \n");
+    else
+    {
+        for($i=0;$i<$dim-1;$i++)
+        {
+            if($i!=($dim-2))
+                fwrite($GLOBALS['test'], "\cls{".$arg[$i]."} \n \n");
+            else
+                fwrite($GLOBALS['test'], "\cls{".$arg[$i]."}");
+        }
+        fwrite($GLOBALS['test'], " \\\\ \n");
+    }
+}
+fwrite($GLOBALS['test'], "\\rowcolor{white} \n");
+fwrite($GLOBALS['test'], "\\caption{Tracciamento test di unità - classi.metodo} \n");
+fwrite($GLOBALS['test'], "\\end{longtable} \n \n");
+
+
+echo "Funzia";
 ?>
