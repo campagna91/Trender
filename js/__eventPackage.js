@@ -77,8 +77,8 @@ $(document).on("click","#moduleInsertionInsert",function(){
 	var data = [
 		newTitolo,
 		$("#moduleInsertionDad").val(),
-		$("#moduleInsertionImage").val(),
-		$("#moduleInsertionDescription").val()
+		$("#moduleInsertionDescription").val(),
+		$("#moduleInsertionImage").val()
 	];
 	sent('package','insert',data);
 });
