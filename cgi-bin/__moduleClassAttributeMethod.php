@@ -8,18 +8,19 @@ if(isset($_POST['id']))
 		<!-- inserimento nuovo attributo -->
 		<input type="text" id="moduleAttributeMethodNewAttribute" placeholder="Nome attributo">
 		<select class="type" id="moduleAttributeMethodTypeAttribute">
+			<option value="Date">Date</option>
+			<option value="Number">Number</option>
+			<option value="Number[]">Number[]</option>
+			<option value="Integer">Integer</option>
+			<option value="Integer[]">Integer[]</option>
+			<option value="Boolean">Boolean</option>
+			<option value="String[]">String[]</option>
 
 			<!-- tipo attributo -->
-			<option value="int">int</option>
-			<option value="date">date</option>
-			<option value="double">double</option>
-			<option value="double[]">double[]</option>
-			<option value="boolean">boolean</option>
-			<option value="string[]">string[]</option>
-			<option value="httpPromise">httpPromise</option>
-			<option value="string">string</option>
-			<option value="object">object</option>
-			<option value="object[]">object[]</option><?
+			<option value="HttpPromise">HttpPromise</option>
+			<option value="String">String</option>
+			<option value="Object">Object</option>
+			<option value="Object[]">Object[]</option><?
 			$qType = mysqli_query(connect(), "select titolo from Classi")or die("errore selezione classi tipo");
 			while($vType = $qType->fetch_array())
 			{?>
@@ -44,23 +45,23 @@ if(isset($_POST['id']))
 			}?>
 		</ul>
 
-
 		<!-- inserimento nuovo metodo -->
 		<input type="text" id="moduleAttributeMethodNameMethod" placeholder="Nome metodo">
 		<select class="type" id="moduleAttributeMethodReturnType">
 
 			<!-- valori valori di ritorno-->
-			<option value="int">int</option>
-			<option value="date">date</option>
-			<option value="double">double</option>
-			<option value="double[]">double[]</option>
-			<option value="boolean">boolean</option>
-			<option value="string[]">boolean</option>
-			<option value="httpPromise">httpPromise</option>
-			<option value="string">string</option>
-			<option value="object">object</option>
-			<option value="object[]">object[]</option>
-			<option value="void">void</option><?
+			<option value="Integer">Integer</option>
+			<option value="Integer[]">Integer[]</option>
+			<option value="Date">Date</option>
+			<option value="Number">Number</option>
+			<option value="Number[]">Number[]</option>
+			<option value="Boolean">Boolean</option>
+			<option value="String[]">Boolean</option>
+			<option value="HttpPromise">HttpPromise</option>
+			<option value="String">String</option>
+			<option value="Object">Object</option>
+			<option value="Object[]">Object[]</option>
+			<option value="Void">Void</option><?
 			$qType = mysqli_query(connect(), "select titolo from Classi");
 			while($vType = $qType->fetch_array())
 			{?>
@@ -95,17 +96,18 @@ if(isset($_POST['id']))
 				<select class="type">
 
 						<!-- valori valori di ritorno-->
-						<option value="int" <?if('int' == $vM[1]) echo "selected='selected'";?> >int</option>
-						<option value="date" <?if('date' == $vM[1]) echo "selected='selected'";?> >date</option>
-						<option value="double" <?if('double' == $vM[1]) echo "selected='selected'";?> >double</option>
-						<option value="double[]" <?if('double[]' == $vM[1]) echo "selected='selected'";?> >double[]</option>
-						<option value="boolean" <?if('boolean' == $vM[1]) echo "selected='selected'";?> >boolean</option>
-						<option value="string[]" <?if('string[]' == $vM[1]) echo "selected='selected'";?> >string[]</option>
-						<option value="httpPromise" <?if('httpPromise' == $vM[1]) echo "selected='selected'";?> >httpPromise</option>
-						<option value="string" <?if('string' == $vM[1]) echo "selected='selected'";?> >string</option>
-						<option value="object" <?if('object' == $vM[1]) echo "selected='selected'";?> >object</option>
-						<option value="object[]" <?if('object[]' == $vM[1]) echo "selected='selected'";?> >object[]</option>
-						<option value="void" <?if('void' == $vM[1]) echo "selected='selected'";?> >void</option><?
+						<option value="Number" <?if('Number' == $vM[1]) echo "selected='selected'";?> >Number</option>
+						<option value="Number[]" <?if('Number[]' == $vM[1]) echo "selected='selected'";?> >Number[]</option>
+						<option value="Date" <?if('Date' == $vM[1]) echo "selected='selected'";?> >Date</option>
+						<option value="Integer" <?if('Integer' == $vM[1]) echo "selected='selected'";?> >Integer</option>
+						<option value="Integer[]" <?if('Integer[]' == $vM[1]) echo "selected='selected'";?> >Integer[]</option>
+						<option value="Boolean" <?if('Boolean' == $vM[1]) echo "selected='selected'";?> >Boolean</option>
+						<option value="String[]" <?if('String[]' == $vM[1]) echo "selected='selected'";?> >String[]</option>
+						<option value="HttpPromise" <?if('HttpPromise' == $vM[1]) echo "selected='selected'";?> >HttpPromise</option>
+						<option value="String" <?if('String' == $vM[1]) echo "selected='selected'";?> >String</option>
+						<option value="Object" <?if('Object' == $vM[1]) echo "selected='selected'";?> >Object</option>
+						<option value="Object[]" <?if('Object[]' == $vM[1]) echo "selected='selected'";?> >Object[]</option>
+						<option value="Void" <?if('Void' == $vM[1]) echo "selected='selected'";?> >Void</option><?
 						$qType = mysqli_query(connect(), "select titolo from Classi");
 						while($vType = $qType->fetch_array())
 						{?>
@@ -137,16 +139,17 @@ if(isset($_POST['id']))
 							<select class="type">
 
 								<!-- valori valori di ritorno-->
-								<option value="int" <?if('int' == $param[1]) echo "selected='selected'";?> >int</option>
-								<option value="date" <?if('date' == $param[1]) echo "selected='selected'";?> >date</option>
-								<option value="double" <?if('double' == $param[1]) echo "selected='selected'";?> >double</option>
-								<option value="double[]" <?if('double[]' == $param[1]) echo "selected='selected'";?> >double[]</option>
-								<option value="boolean" <?if('boolean' == $param[1]) echo "selected='selected'";?> >boolean</option>
-								<option value="string[]" <?if('string[]' == $param[1]) echo "selected='selected'";?> >string[]</option>
-								<option value="httpPromise" <?if('httpPromise' == $param[1]) echo "selected='selected'";?> >httpPromise</option>
-								<option value="string" <?if('string' == $param[1]) echo "selected='selected'";?> >string</option>
-								<option value="object" <?if('object' == $param[1]) echo "selected='selected'";?> >object</option>
-								<option value="object[]" <?if('object[]' == $param[1]) echo "selected='selected'";?> >object[]</option><?
+								<option value="Integer" <?if('Integer' == $param[1]) echo "selected='selected'";?> >Integer</option>
+								<option value="Integer[]" <?if('Integer[]' == $param[1]) echo "selected='selected'";?> >Integer[]</option>
+								<option value="Date" <?if('Date' == $param[1]) echo "selected='selected'";?> >Date</option>
+								<option value="Number" <?if('Number' == $param[1]) echo "selected='selected'";?> >Number</option>
+								<option value="Number[]" <?if('Number[]' == $param[1]) echo "selected='selected'";?> >Number[]</option>
+								<option value="Boolean" <?if('Boolean' == $param[1]) echo "selected='selected'";?> >Boolean</option>
+								<option value="String[]" <?if('String[]' == $param[1]) echo "selected='selected'";?> >String[]</option>
+								<option value="HttpPromise" <?if('HttpPromise' == $param[1]) echo "selected='selected'";?> >HttpPromise</option>
+								<option value="String" <?if('String' == $param[1]) echo "selected='selected'";?> >String</option>
+								<option value="Object" <?if('Object' == $param[1]) echo "selected='selected'";?> >Object</option>
+								<option value="Object[]" <?if('Object[]' == $param[1]) echo "selected='selected'";?> >Object[]</option><?
 								$qType = mysqli_query(connect(), "select titolo from Classi");
 								while($vType = $qType->fetch_array())
 								{?>

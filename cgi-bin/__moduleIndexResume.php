@@ -7,7 +7,7 @@ require_once('__system.php');?>
 	$k = "select * from Requisiti where soddisfatto = 1";
 	$q = mysqli_query(connect(),$k) or die("MODINDEXRESUME : (requisiti) ".$k);
 	$numRS = mysqli_num_rows($q);
-	if($numRS) $perc = round(($numR/$numRS),2);
+	if($numRS) $perc = round(($numRS * 100 /$numR),2);
 	else $perc = 0;
 	$k = "select * from CasiUso "; 
 	$q = mysqli_query(connect(),$k) or die ("MODINDEXRESUME : (usecase) ".$k);

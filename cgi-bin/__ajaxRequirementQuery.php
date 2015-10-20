@@ -9,4 +9,3 @@
 	$q = mysqli_query(connect(), $k) or die("ERR - ".$k);
 	$v = $q->fetch_assoc();
 	echo $v['num'];
-	//echo mysqli_num_rows($q);

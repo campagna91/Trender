@@ -1,0 +1,35 @@
+.brand-logo {
+	margin-left: 10px;
+}
+body {
+	background-image:url('../image/background.png');
+	background-size:500px;
+	background-repeat:repeat;
+	background-margin:-500px;
+}
+#mainList {
+	margin-top: 20px;
+}
+#mainList table {
+	background-color: #607d8b;
+}
+#mainList thead {
+	color:white;
+	background-color: #455a64;
+}
+#mainList table thead tr th{
+	text-align: center;
+}
+.selected{
+	background-color: green;
+}
+.blue-grey.col {
+	padding-bottom:10px;
+	display:block;
+}
+.modal-content h3 {
+	color:black;
+}
+.modal-content h6 {
+	display:none;
+}

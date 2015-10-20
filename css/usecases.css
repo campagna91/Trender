@@ -1,0 +1,45 @@
+a#addUsecase{
+	position:absolute;
+	bottom:25px;
+	right:25px;
+}
+div.row{
+	width:90%;
+	margin:0 auto;
+}
+div.blue-grey{
+	width: 90%;
+	margin:0 auto;
+	margin-top:25px;
+	padding:15px;
+	padding-bottom:15px;
+}
+div.blue-grey > *{
+	color:white;
+}
+h1#id{
+	text-align:center;
+}
+h3{
+	color:white;
+	text-align:center;
+}
+a.waves-effect{
+	display:block;
+	margin:0 auto;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+div.group > div {
+	margin:40px;
+}
+div#mainListWrapper{
+	margin:0 auto;
+	text-align:center;
+}
+.error{
+	border:1px solid red;
+}
+.hide {
+	display:none;
+}

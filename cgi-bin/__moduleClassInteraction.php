@@ -1,8 +1,6 @@
 <? 
 require_once('__system.php');
-if(isset($_POST['id']))
-{
-	$id = $_POST['id'];?>
+?>
 	<div id="moduleInteraction">
 		<select id="moduleInteractionClass"><?
 			$k = "select * from Classi where titolo != '$id' and titolo not in (select classB from ClassInteractions where classA = '$id' ) order by length(titolo),titolo";
@@ -28,5 +26,4 @@ if(isset($_POST['id']))
 				</tr><?
 			}?>
 		</table>
-	</div><?
-}
+	</div>

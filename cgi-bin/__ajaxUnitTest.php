@@ -10,11 +10,11 @@ require_once("__system.php");
 	$k = ""; 
 	switch($typeRequest){
 		case('insert'): 
-			$data[0] = mysqli_real_escape_string(connect(),$data[0]);
-			$k = "insert into UnitTest (description) values ('$data[0]')"; break;
+			$description = mysqli_real_escape_string(connect(),$data[0]);
+			$k = "insert into UnitTest (description) values ('$description')"; break;
 		case('update'): 
-			$data[1] = mysqli_real_escape_string(connect(),$data[1]);
-			$k = "update UnitTest set description = '$data[1]', relations = '$data[2]' where idUT = '$data[0]'"; break;
+			$description = mysqli_real_escape_string(connect(),$data[1]);
+			$k = "update UnitTest set description = '$description', relations = '$data[2]' where idUT = '$data[0]'"; break;
 		case('changeImplementedState'): 
 			$implemented = 0; 
 			if($data[1] == 'typeSatisfied')
