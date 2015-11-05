@@ -13,7 +13,7 @@ function mainList() { ?>
 				case('verbals.php'):	include_once('__moduleVerbalsList.php');	break; 
 				case('packages.php'):	 include_once('__modulePackagesList.php');	break; 
 				case('classes.php'):	 include_once('__moduleClassesList.php');	break; 
-				//case('unitTest.php'):	include_once('__moduleUnitTestList.php'); break;
+				case('unitTests.php'):	include_once('__moduleUnitTestsList.php'); break;
 			} ?>
 		</div> <?
 }

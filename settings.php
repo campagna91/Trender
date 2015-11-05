@@ -2,12 +2,12 @@
 require_once('cgi-bin/__module.php'); ?>
 <html>
 	<head>
-		<title>Usecases</title>
+		<title>Settings</title>
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.min.css"/>
-		<link type="text/css" rel="stylesheet" href="css/usecases.css"/>
+		<link type="text/css" rel="stylesheet" href="css/settings.css"/>
 		<link type="text/css" rel="stylesheet" href="css/system.css"/>
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -30,11 +30,27 @@ require_once('cgi-bin/__module.php'); ?>
 			logged();
 		?>
 			<div class="row">
-				<div class="col s3">
+				<div class="col s4">
 					<? include_once 'cgi-bin/__moduleSettingMenu.php'; ?>
 				</div>
-				<div class="col s9">
-					<? include_once 'cgi-bin/__moduleSettingContent.php'; ?>
+				<div id="setting-content" class="col s8 blue-grey">
+					<?
+						if(isset($_GET['part'])) {
+							switch($_GET['part']) {
+								case('types'):
+									include_once 'cgi-bin/__moduleSettingTypes.php';
+									break;
+
+								case('users'):
+									include_once 'cgi-bin/__moduleSettingUsers.php';
+									break;
+
+								default:
+									include_once 'cgi-bin/__moduleSettingSources.php';
+							}
+						} else 
+							include_once 'cgi-bin/__moduleSettingSources.php';
+					?>
 				</div>
 			</div>
 	</body>

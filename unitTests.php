@@ -11,14 +11,14 @@
 ?>
 <html>
 	<head>
-		<title>Packages</title>
+		<title>Unit test</title>
 
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.min.css"/>
-		<link type="text/css" rel="stylesheet" href="css/packages.css"/>
+		<link type="text/css" rel="stylesheet" href="css/unitTests.css"/>
 		<link type="text/css" rel="stylesheet" href="css/system.css"/>
 
 		<!--Let browser know website is optimized for mobile-->
@@ -50,47 +50,36 @@
 				mainList(); ?>
 
 				<!-- Button to add a requirement -->
-				<a id="addPackage" class="btn-floating btn-large waves-effect waves-light red modal-trigger" data-target="packagesInsertion"><i class="material-icons">add</i></a> <?
+				<a id="addUnitTest" class="btn-floating btn-large waves-effect waves-light red modal-trigger" data-target="unitTestsInsertion"><i class="material-icons">add</i></a> 
+					
+					<?
 
-				// Modal insertion window
-				include_once 'cgi-bin/__modulePackagesInsertion.php';
+						// Modal insertion window
+						include_once 'cgi-bin/__moduleUnitTestsInsertion.php';
+
 			} else {
 				if(!esiste($_GET['id'])) { ?>
 
 					<!-- Redirect if id not exist -->
-					<script> location.href = 'packages.php'; </script>
+					<script> location.href = 'unitTests.php'; </script>
 
 				<? } else {
 					$id = $_GET['id']; ?>
 
 					<!-- Current requirement id -->
 					<h1 id="id"><? echo($id) ?></h1>
+					<?
+					
+						// Module required to perform action on unit test
+						include_once '__moduleUnitTestsUpdate.php';
 
-					<!-- Module required to update requirement's information -->
-					<? include_once '__modulePackagesUpdate.php' ?>
+						// Module required to perform action on method combined with test
+						include_once '__moduleUnitTestsMethods.php';
 
-					<div class="row">
-						<?
+					?>
 
-							// Module required to perform action on package's child
-							include_once '__modulePackagesChild.php';
-
-							// Module required to perform action on requirement's package combined
-							include_once '__modulePackagesRequirement.php'
-
-						?>
-					</div>
-					<div class="row">
-						<?
-							
-							// Module required to insert an integration test
-							include_once '__modulePackagesTest.php';
-
-						?>
-					</div>
-
-					<!-- Perform a delete of requirement -->
-					<a id="packageDelete" class="waves-effect waves-light col s12 red btn-large">Delete package</a>
+					<!-- Perform a delete of usecase -->
+					<a id="unitTestDelete" class="waves-effect waves-light col s12 red btn-large">Delete test</a>
 
 				<? }
 			}

@@ -75,3 +75,32 @@ function getRelationType(abbrevation) {
 			return 'association';
 	}
 }
+
+/*
+	Table content td
+*/
+function truncate(table) {
+	if(table === undefined) {
+		$("table tbody tr td:not(.control)").each(function() {
+			var text = $(this).text();
+			$(this).text('');
+			var tableWidth = $(this).parent().parent().parent().width();
+			var numCols = $(this).parent().children('td').size();
+			var maxWidth = tableWidth / numCols;
+			$(this).css('max-width', maxWidth);
+			$(this).css('overflow','hidden');
+			$(this).text(text);
+		});
+	} else {
+		$("#" + table + " tbody tr td:not(.control)").each(function() {
+			var text = $(this).text();
+			$(this).text('');
+			var tableWidth = $(this).parent().parent().parent().width();
+			var numCols = $(this).parent().children('td').size();
+			var maxWidth = tableWidth / numCols;
+			$(this).css('max-width', maxWidth);
+			$(this).css('overflow','hidden');
+			$(this).text(text);
+		});
+	}
+}

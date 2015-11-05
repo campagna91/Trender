@@ -33,3 +33,14 @@ body {
 .modal-content h6 {
 	display:none;
 }
+table tbody tr td {
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+a.waves-effect{
+	display:block;
+	margin:0 auto;
+	margin-top:10px;
+	margin-bottom:10px;
+}

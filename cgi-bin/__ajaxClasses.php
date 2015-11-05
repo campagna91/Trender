@@ -4,6 +4,9 @@
 	// Request type (insert, update, combine some entity, etc)
 	$typeRequest = $_POST['typeRequest'];
 
+	// Rappresent the type of selection need only if variable $typeRequest has a value == 'select
+	$typeSelect;
+
 	// Data passed for specific action
 	$data = $_POST['data'];
 
@@ -13,7 +16,7 @@
 	// Database connection
 	$link = connect();
 
-	switch($typeRequest){
+	switch($typeRequest) {
 		case('insert');
 			$data[1] = mysqli_real_escape_string($link,$data[1]);
 			$data[2] = mysqli_real_escape_string($link,$data[2]);
@@ -70,6 +73,17 @@
 			$k = "insert into ClassMethodsParams values ('$data[0]', '$data[1]', '$data[2]', '$data[3]', '$data[4]', '$data[5]', '$data[6]')";
 			break;
 
+		case('paramDeleteAll'):
+			$k = "delete from ClassMethodsParams where class = '$data[0]' and package = '$data[1]' and signature = '$data[2]' and returnType = '$data[3]'";
+			break;
+
+		case('methodDelete'):
+			$k = "delete from ClassMethods where class = '$data[0]' and package = '$data[1]' and signature ='$data[2]' and returnType = '$data[3]'";
+			break;
+
+		case('methodUpdate'):
+			$k = "update classMethods set signature = '$data[4]', returnType = '$data[5]', description = '$data[6]' where class = '$data[0]' and package = '$data[1]' and signature = '$data[2]' and returnType = '$data[3]'";
+			break;
 
 	}
 	if($k != "") {

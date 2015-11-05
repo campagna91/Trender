@@ -7,7 +7,8 @@ $(document).on("click","#mainList tr",function(){
 		case('usecases.php'): 
 		case('actors.php'): 
 		case('verbals.php'):
-		case('packages.php'): 
+		case('packages.php'):
+		case('unitTests.php'):
 			location.href = document.location.pathname.match(/[^\/]+$/)[0] + "?id=" + $(this).attr('class').split(/\s+/)[0];
 			break;
 		case('classes.php'): 
@@ -22,7 +23,7 @@ var lastCSS = '';
 /*
 	Put row in evidence
 */
-$(document).on("mouseover","#mainList tbody tr",function(){
+$(document).on("mouseover","#mainList tbody tr, table tbody tr",function(){
 	while(lastCSS == '') {}
 	var lastCSS = $(this).css('background-color');
 	$(this).css('background-color', '#69f0ae');
@@ -32,7 +33,7 @@ $(document).on("mouseover","#mainList tbody tr",function(){
 /*
 	Remove row's evidence
 */
-$(document).on("mouseleave","#mainList tbody tr",function(){
+$(document).on("mouseleave","#mainList tbody tr, table tbody tr",function(){
 	$(this).css('background-color', lastCSS);
 	lastCSS = '';
 });

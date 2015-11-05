@@ -25,7 +25,7 @@
       <li><a href="verbals.php">Verbals</a></li>
       <li><a href="packages.php">Packages</a></li>
       <li><a href="classes.php">Classes</a></li>
-      <li><a href="unitTest.php">Tests</a></li>
+      <li><a href="unitTests.php">Tests</a></li>
 
       <!-- Dropdown Trigger -->
       <li><a class="dropdown-button" data-activates="Stampa">Prints<i class="material-icons right">arrow_drop_down</i></a></li>

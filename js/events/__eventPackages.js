@@ -78,3 +78,34 @@ $(document).on("click", ".packageChildDelete", function() {
 	sent('packages', 'childDelete', data);
 	$(this).parent().parent().remove();
 });
+
+/*
+	Package integration insert
+*/
+$(document).on("click", "#packageIntegrationInsert", function() {
+	if(formIsValid('packagesIntegration')) {
+		var data = [
+			$("#id").text(),
+			$("#packageIntegrationDescription").val(),
+			$("#packageIntegrationImplemented").val(),
+			$("#packageIntegrationSatisfied").val()
+		];
+		sent('packages', 'integrationInsert', data);
+		$("#packageIntegrationInsert").text('Update');
+	}
+});
+
+/*
+	Package integration update
+*/
+$(document).on("click", "#packageIntegrationUpdate", function() {
+	if(formIsValid('packagesIntegration')) {
+		var data = [
+			$("#id").text(),
+			$("#packageIntegrationDescription").val(),
+			$("#packageIntegrationImplemented").val(),
+			$("#packageIntegrationSatisfied").val()
+		];
+		sent('packages', 'integrationUpdate', data);
+	}
+});

@@ -11,7 +11,7 @@
 <div class="row blue-grey">
 	<h3>Attributes</h3>
 	<div id="classesAttributesInsert" class="col s4 blue-grey">
-	<h5 class="center">Insert new parameter</h5>
+	<h5 class="center">Insert new attribute</h5>
 
 		<!-- Type -->
 		<div class="input-field col s12">
@@ -54,7 +54,7 @@
 					$q = mysqli_query(connect(), $kAttribute) or die("ERRORE: " . $kAttribute);
 					while($v = $q->fetch_array()) { ?>
 						<tr class="<? echo $v[0] ?>">
-							<td>
+							<td class="control">
 								<a class="btn-floating btn-medium waves-light attributeUpdate"><i class="material-icons">create</i></a>
 								<a class="btn-floating btn-medium waves-light attributeRemove"><i class="material-icons">remove</i></a>
 							</td>

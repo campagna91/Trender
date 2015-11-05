@@ -28,25 +28,35 @@ switch(document.location.pathname.match(/[^\/]+$/)[0]){
 		$.getScript('js/moduleLoaders/__moduleRequirements.js');
 		$.getScript('js/events/__eventRequirements.js'); 
 		break;
+
 	case('usecases.php'): 
 		$.getScript('js/moduleLoaders/__moduleUsecases.js');
 		$.getScript('js/events/__eventUsecases.js'); 
 		break;
+
 	case('actors.php'): 
 		$.getScript('js/moduleLoaders/__moduleActors.js');
 		$.getScript('js/events/__eventActors.js'); 
 		break;
+
 	case('verbals.php'): 
 		$.getScript('js/moduleLoaders/__moduleVerbals.js');
 		$.getScript('js/events/__eventVerbals.js'); 
 		break;
+
 	case('packages.php'): 
 		$.getScript('js/moduleLoaders/__modulePackages.js');
 		$.getScript('js/events/__eventPackages.js'); 
 		break;
+
 	case('classes.php'): 
 		$.getScript('js/moduleLoaders/__moduleClasses.js');
 		$.getScript('js/events/__eventClasses.js'); 
+		break;
+
+	case('unitTests.php'):
+	$.getScript('js/moduleLoaders/__moduleUnitTests.js');
+		$.getScript('js/events/__eventUnitTests.js');
 		break;
 }
 

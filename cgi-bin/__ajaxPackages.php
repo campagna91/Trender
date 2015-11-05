@@ -61,6 +61,14 @@
 		case('requirementDelete'):
 			$k = "delete from PackagesRequirements where package = '$data[0]' and requirement = '$data[1]'";
 			break;
+
+		case('integrationInsert'):
+			$k = "insert into IntegrationTest (package, description, implemented, satisfied) values ('$data[0]', '$data[1]', '$data[2]', '$data[3]')";
+			break;
+
+		case('integrationUpdate'):
+			$k = "update IntegrationTest set description = '$data[1]', implemented = '$data[2]', satisfied = '$data[3]' where package = '$data[0]'";
+			break;
 	}
 	if($k != "") {
 		if(!mysqli_query($link, $k)) 

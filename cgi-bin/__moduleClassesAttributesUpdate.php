@@ -26,14 +26,14 @@
 
 		  <!-- Description -->
 		  <div class="input-field col s12">
-		  	<textarea id="updateAttributeDescription" class="materialize-textarea validate"></textarea>
+		  	<textarea id="updateAttributeDescription" onready="alert('ciao');" class="materialize-textarea validate"></textarea>
 		  	<label for="updateAttributeDescription">Description</label>
 		  </div>
 		 </div>
 
 	</div>
 	<div class="modal-footer">
-		<a id="classAttributeUpdate" class="modal-action waves-effect waves-green btn-flat">Insert</a>
+		<a id="classAttributeUpdate" class="modal-action waves-effect waves-green btn-flat">Save</a>
 	  <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
 	</div>
 </div>

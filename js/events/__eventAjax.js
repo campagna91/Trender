@@ -25,8 +25,8 @@ function sent(section, type, dataSent){
 			path = "cgi-bin/__ajaxPackages.php"; 
 			break;
 
-		case('unitTest'): 
-			path = "cgi-bin/__ajaxUnitTest.php"; 
+		case('unitTests'): 
+			path = "cgi-bin/__ajaxUnitTests.php"; 
 			break;
 	}
 	alert(dataSent);
@@ -50,10 +50,6 @@ function sent(section, type, dataSent){
 					loadInsert();
 					loadList();
 					location.href="" + section + ".php";
-					break;
-
-				case('update'):
-					//loadUpdate();
 					break;
 			}
 		}

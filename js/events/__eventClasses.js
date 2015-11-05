@@ -15,13 +15,6 @@ $(document).on("click", "#classInsert", function() {
 });
 
 /*
-	Class insertion nameFix
-*/
-$(document).on("focusout", "#class", function() {
-	$("#class").val($.trim($(this).val()).replace(/\s/g, "_"));
-});
-
-/*
 	Classes delete
 */
 $(document).on("click", "#classDelete", function() {
@@ -137,14 +130,8 @@ $(document).on("click", "#classAttributeInsert", function() {
 		$("#attributeName").val('');
 		$("#attributeDescription").val('');
 		$("#classAttributeList").append("<tr class=" + data[1] + "><td><a class='btn-floating btn-medium waves-light attributeUpdate'><i class='material-icons'>create</i></a><a class='btn-floating btn-medium waves-light attributeRemove'><i class='material-icons'>remove</i></a></td><td>" + data[1] + "</td><td>" + data[2] + "</td><td>" + data[3] + "</td></tr>");
+		truncate('classAttributeList');
 	}
-});
-
-/*
-	Classes attribute insert nameFix
-*/
-$(document).on("focusout", "#attributeName", function() {
-	$("#attributeName").val($.trim($(this).val()).replace(/\s/g, "_"));
 });
 
 /*
@@ -172,13 +159,15 @@ $(document).on("click", "#classAttributeUpdate", function() {
 	}
 });
 
+/*
+	Classes attribute update confirm
+*/
 $(document).on("click", ".attributeUpdate", function() {
 	$("#updateAttributeName").val($(this).parent().next().text());
 	$("#updateAttributeDescription").val($(this).parent().next().next().next().text());
 	$("#updateAttribute").text($("#updateAttributeName").val());
 	$("#classesAttributesUpdate").openModal();
-	var x = $(this).parent().next().next().text();
-	selectCurrent('updateAttributeType', x);
+	selectCurrent('updateAttributeType', $(this).parent().next().next().text());
 	$('select').material_select();
 });
 
@@ -208,11 +197,11 @@ $(document).on("click", "#classMethodInsert", function() {
 			$("#methodDescription").val()
 		];
 		sent('classes', 'methodInsert', data);
-		
-		$("#classAttributeList").append("<tr class='" + data[1] + "'><td>" + data[1] + "</td><td>" + data[2] + "</td><td>" + data[3] + "</td></tr>");
+		$("#classMethodList").append("<tr><td class='control'><a class='btn-floating btn-medium waves-light methodUpdate'><i class='material-icons'>create</i></a><a class='btn-floating btn-medium waves-light methodRemove'><i class='material-icons'>remove</i></a></td><td class='" + data[3] + "'>" + data[3] + "</td><td class='" + data[2] + "'>" + data[2] + "</td><td class='" + data[4] + "'>" + data[4] + "</td></tr>");
+		truncate('classMethodList');
 
+		// Params insertion
 		$("#classMethodParamList div.chip").each(function() {
-			console.log('chip');
 			var data = [
 				$("#id").text(),
 				urlParam('package'),
@@ -223,35 +212,116 @@ $(document).on("click", "#classMethodInsert", function() {
 				$(this).children('a').attr('data-tooltip')
 			];
 			sent('classes', 'paramInsert', data);
+			$(this).remove();
 		});
-
+		$("#methodSignature").val('');
+		$("#methodDescription").val('');
+		selectCurrent('methodType', '');
+		$('select').material_select();
 	}
-});
-
-/*
-	Class method insert nameFix
-*/
-$(document).on("focusout", "#methodSignature", function() {
-	$("#methodSignature").val($.trim($(this).val()).replace(/\s/g, "_"));
 });
 
 /*
 	Class method delete
 */
+$(document).on("click", ".methodRemove", function() {
+	var data = [
+		$("#id").text(),
+		urlParam('package'),
+		$(this).parent().next().attr('class'),
+		$(this).parent().next().next().attr('class')
+	];
+	sent('classes', 'methodDelete', data);
+	$(this).parent().parent().remove();
+});
 
 /*
-	Class method udpate
+	Class method udpate modal
 */
+$(document).on("click", ".methodUpdate", function() {
+	var data = [
+		$("#id").text(), 
+		urlParam('package'),
+		$(this).parent().next().attr('class'),
+		$(this).parent().next().next().attr('class')
+	];
+	loadMethodUpdate(data);
+});
+
+/*
+	Class method update
+*/
+$(document).on("click","#classMethodUpdate", function() {
+	if(formIsValid('classMethodsUpdate')) {
+		var data = [
+			urlParam('id'),
+			urlParam('package'),
+			$("#updateMethod").text().split(".")[1],
+			$("#updateMethod").text().split(".")[0],
+			$("#classMethodsUpdateSignature").val(),
+			$("#classMethodsUpdateType").val(),
+			$("#classMethodsUpdateDescription").val()
+		];
+		sent('classes', 'methodUpdate', data);
+		$("#classesMethodsUpdate").closeModal();
+
+		$("#classMethodList tbody tr").each(function(index) {
+			console.log('type = ' + data[3] + ' signature = ' + data[2]);
+			if($(this).children('td').eq(1).attr('class') == data[2] && $(this).children('td').eq(2).attr('class') == data[3]) {
+				$(this).remove();
+				return;
+			}
+		});
+
+		$("#classMethodList").append("<tr><td class='control'><a class='btn-floating btn-medium waves-light methodUpdate'><i class='material-icons'>create</i></a><a class='btn-floating btn-medium waves-light methodRemove'><i class='material-icons'>remove</i></a></td><td class='" + data[4] + "'>" + data[4] + "</td><td class='" + data[5] + "'>" + data[5] + "</td><td class='" + data[6] + "'>" + data[6] + "</td></tr>");
+		truncate('classMethodList');
+		
+		var data = [
+			urlParam('id'),
+			urlParam('package'),
+			$("#updateMethod").text().split(".")[1],
+			$("#updateMethod").text().split(".")[0]
+		];
+		sent('classes', 'paramDeleteAll', data);
+
+		$("#classMethodsUpdateParamsList div.chip").each(function() {
+			var data = [
+				urlParam('id'),
+				urlParam('package'),
+				$("#updateMethod").text().split(".")[1],
+				$("#updateMethod").text().split(".")[0],
+				$(this).children('a').text().split(':')[1],
+				$(this).children('a').text().split(':')[0],
+				$(this).children('a').attr('data-tooltip')
+			];
+			sent('classes','paramInsert', data);
+		});
+	}
+});
+
+/*
+	Class method update param insert
+*/
+$(document).on("click", "#classMethodUpdateParamInsert", function() {
+	if(formIsValid('classMethodUpdateParamInsert')) {
+		$("#classMethodsUpdateParamsList").append("<div class='chip'><a class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='" + $("#classMethodUpdateParamDescription").val() + "'>" + $("#classMethodUpdateParamType").val() + ":" + $("#classMethodUpdateParamName").val() + "</a><i class='material-icons paramDelete'>close</i></div>");
+		$('.tooltipped').tooltip({delay: 50});
+		selectCurrent('classMethodUpdateParamType', '');
+		$('select').material_select();
+		$("#classMethodUpdateParamDescription").val('');
+		$("#classMethodUpdateParamName").val('');
+	}
+});
 
 /*
 	Class param insert
 */
 $(document).on("click", "#classMethodParamInsert", function() {
-	console.log('ciao');
 	if(formIsValid('classMethodParam')) {
 		$("#classMethodParamList").append("<div class='chip'><a class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='" + $("#paramDescription").val() + "'>" + $("#paramType").val() + ":" + $("#paramName").val() + "</a><i class='material-icons paramDelete'>close</i></div>");
 		$('.tooltipped').tooltip({delay: 50});
-		$("#paramType").val('');
+		selectCurrent('paramType', '');
+		$('select').material_select();
 		$("#paramName").val('');
 		$("#paramDescription").val('');
 	}
@@ -262,4 +332,15 @@ $(document).on("click", "#classMethodParamInsert", function() {
 */
 $(document).on("click", ".paramDelete", function() {
 	$(this).parent().remove();
+});
+
+/*
+	Fix name without space
+*/
+$(document).on("focusout", "#methodSignature, #attributeName, #class, #paramName, #classMethodsUpdateSignature, #classMethodUpdateParamName", function() {
+	$(this).val($.trim($(this).val()).replace(/\s/g, "_"));
+});
+
+$(document).ready(function() {
+	truncate();
 });

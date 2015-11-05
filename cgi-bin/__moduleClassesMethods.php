@@ -72,18 +72,30 @@
 	</div>
 
 	<a id="classMethodInsert" class="waves-effect waves-light btn-large">INSERT</a>
-	<div class="row" id="classMethodList">
-		<table class="striped">
-			<?
-				$q = mysqli_query(connect(), $kMethod) or die("ERRORE: " . $kMethod);
-				while($v = $q->fetch_array()) { ?>
-					<tr class="<? echo $v[1] . "." . $v[0] ?>">
-						<td><? echo $v[0] ?></td>
-						<td><? echo $v[1] ?></td>
-						<td><? echo $v[2] ?></td>
-					</tr>
-				<? }
-			?>
+	<div class="row">
+		<table class="striped col s12" id="classMethodList">
+			<thead>	
+				<th></th>
+				<th>Signature</th>
+				<th>Return type</th>
+				<th>Description</th>
+			</thead>
+			<tbody>
+				<?
+					$q = mysqli_query(connect(), $kMethod) or die("ERRORE: " . $kMethod);
+					while($v = $q->fetch_array()) { ?>
+						<tr>
+							<td class="control">
+								<a class="btn-floating btn-medium waves-light methodUpdate"><i class="material-icons">create</i></a>
+								<a class="btn-floating btn-medium waves-light methodRemove"><i class="material-icons">remove</i></a>
+							</td>
+							<td class="<? echo $v[0] ?>"><? echo $v[0] ?></td>
+							<td class="<? echo $v[1] ?>"><? echo $v[1] ?></td>
+							<td class="<? echo $v[2] ?>"><? echo $v[2] ?></td>
+						</tr>
+					<? }
+				?>
+			</tbody>
 		</table>
 	</div>
 </div>

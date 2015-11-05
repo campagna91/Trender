@@ -1,24 +1,20 @@
-a#addClass{
-	position:absolute;
+a#addUnitTest{
+	position:fixed;
 	bottom:25px;
 	right:25px;
 }
 div.row{
-	width:90%;
-	margin:0 auto;
+	
 }
 div.blue-grey{
-	width: 90%;
-	margin:0 auto;
-	margin-top:25px;
-	padding:15px;
-	padding-bottom:15px;
+	
 }
 div.blue-grey > *{
 	color:white;
 }
 h1#id{
 	text-align:center;
+	color:white;
 }
 h3{
 	color:white;
@@ -39,7 +35,4 @@ div#mainListWrapper{
 }
 .error{
 	border:1px solid red;
-}
-#classAttributeList tbody tr {
-	color:black;
 }
