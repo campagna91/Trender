@@ -14,7 +14,7 @@
 	<!-- Type -->
 	<div class="row" id="<? echo sizeOf(explode(".", $v[0])); ?>">
 		<div class="input-field col s4 offset-s4">
-			<select id="type" class="validate" <? if(sizeOf(explode(".", $v[0])) <= 1) echo 'disabled' ?>>
+			<select id="type" <? if(sizeOf(explode(".", $v[0])) <= 1) echo 'disabled' ?>>
 				<option value="">Select a type</option>
   			<option value="inclusion">Inclusion</option>
   			<option value="extension">Extension</option>

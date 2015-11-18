@@ -28,8 +28,23 @@ function sent(section, type, dataSent){
 		case('unitTests'): 
 			path = "cgi-bin/__ajaxUnitTests.php"; 
 			break;
+
+		case('sources'):
+			path = "cgi-bin/__ajaxSources.php";
+			break;
+
+		case('types'):
+			path = "cgi-bin/__ajaxTypes.php";
+			break;
+
+		case('prints'):
+			path = "cgi-bin/__ajaxPrints.php";
+			break;
+
+		case('backups'):
+			path = "cgi-bin/__ajaxBackups.php";
 	}
-	alert(dataSent);
+	console.log(dataSent);
 	$.ajax({
 		url: path,
 		type:'post',
@@ -49,7 +64,7 @@ function sent(section, type, dataSent){
 				case('delete'):
 					loadInsert();
 					loadList();
-					location.href="" + section + ".php";
+					//location.href="" + section + ".php";
 					break;
 			}
 		}

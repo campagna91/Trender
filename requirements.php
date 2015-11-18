@@ -96,6 +96,9 @@
 					<!-- Module required to update requirement's system test -->
 					<? include_once '__moduleRequirementsSystemTest.php'; ?>
 
+					<!-- Module required to update requirement's validation test -->
+					<? include_once '__moduleRequirementsValidationTest.php'; ?>
+
 					<!-- Perform a delete of requirement -->
 					<a id="requirementDelete" class="waves-effect waves-light col s12 red btn-large">Delete requirement</a>
 

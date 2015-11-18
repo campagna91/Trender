@@ -55,8 +55,12 @@ switch(document.location.pathname.match(/[^\/]+$/)[0]){
 		break;
 
 	case('unitTests.php'):
-	$.getScript('js/moduleLoaders/__moduleUnitTests.js');
+		$.getScript('js/moduleLoaders/__moduleUnitTests.js');
 		$.getScript('js/events/__eventUnitTests.js');
+		break;
+
+	case('settings.php'):
+		$.getScript('js/events/__eventSettings.js');
 		break;
 }
 

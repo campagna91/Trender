@@ -24,8 +24,8 @@
 			<div class="input-field col s3">
 				<select id="importance">
 					<option value="0">Obbligatory</option>
-					<option value="2">Desiderable</option>
-					<option value="1">Optional</option>
+					<option value="1">Desiderable</option>
+					<option value="2">Optional</option>
 				</select>
 				<label>Importance</label>
 			</div>

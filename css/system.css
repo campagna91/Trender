@@ -1,5 +1,9 @@
+@font-face{
+	font-family: 'Roboto';
+	src: url('../lib/materialize/font/Roboto-Thin.woff') format('woff');
+}
 .brand-logo {
-	margin-left: 10px;
+	margin-left: 0.8em;
 }
 body {
 	background-image:url('../image/background.png');
@@ -16,9 +20,6 @@ body {
 #mainList thead {
 	color:white;
 	background-color: #455a64;
-}
-#mainList table thead tr th{
-	text-align: center;
 }
 .selected{
 	background-color: green;
@@ -37,10 +38,18 @@ table tbody tr td {
   overflow:hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size:11px;
 }
 a.waves-effect{
 	display:block;
 	margin:0 auto;
 	margin-top:10px;
 	margin-bottom:10px;
+}
+td a{
+	text-decoration:none;
+	color:black;
+}
+td a:hover{
+	color:orange;
 }

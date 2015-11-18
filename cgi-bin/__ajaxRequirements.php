@@ -13,22 +13,41 @@
 	// Database connection
 	$link = connect();
 
+	// Fix dad and numeration value of children with a previous numeration uncle deleted
+	function fixChildren($old, $new) {
+		$k = "select requirement from Requirements where dad = '$old'";
+		$tmpConn = connect();
+		$q = mysqli_query($tmpConn, $k) or die("ERRORE: " . $k);
+		while($v = $q->fetch_array()) {
+			$newRequirementId = $new . substr($v[0], strlen($new));
+			$fix = mysqli_query($tmpConn, "SET FOREIGN_KEY_CHECKS = 0")or die("while setting check = 0");
+			$x = "update Requirements set dad = '$new', requirement = '$newRequirementId' where dad = '$old' and requirement =  '$v[0]'";
+			$q2 = mysqli_query($tmpConn, $x) or die("ERRORE: While change dad and requirement value ". $x);
+			$unFix = mysqli_query($tmpConn, "SET FOREIGN_KEY_CHECKS = 1");
+			fixChildren($v[0], $newRequirementId);
+		}	
+	}
+
 	switch($typeRequest) {
 		case('insert'):
 			$data[4] = mysqli_real_escape_string(connect(),$data[4]);
 
 			// Adding requirement without dad
 			if($data[0] != '') {
-				$k = "SELECT IDMAX FROM (SELECT CAST(SUBSTR(requirement,LENGTH('$data[0]')+2,LENGTH(requirement)) AS UNSIGNED) AS IDMAX FROM Requirements WHERE dad = '$data[0]' ORDER BY IDMAX DESC ) AS REQUISITIMAX	LIMIT 1";
-				$q = mysqli_query($link, $k) or die("ERROR: ".$k);
-				$v = $q->fetch_array();
-				$last = $v[0]+1;					
-				$newId = 'R' . $data[1] . substr($data[0],2,strlen($data[0])) . "." . $last;
+				$k = mysqli_query($link, "select substr(requirement, 4, length(requirement)) from Requirements where dad = '$data[0]'") or die("err select future brother");
+				$max = 0;
+				while($v = $k->fetch_array()) {
+					$tmp = explode(".", $v[0]);
+					$tmp = $tmp[sizeof($tmp) - 1];
+					$max = ($tmp > $max) ? $tmp : $max;
+				}
+				$max++;
+				$newId = 'R' . $data[1] . substr($data[0],2,strlen($data[0])) . "." . $max;
 				$k = "INSERT INTO Requirements(requirement,dad,description,source,satisfied) VALUES ('$newId','$data[0]','$data[4]','$data[3]','notSatisfied') ";
 			} else {
 
 				// Adding child requirement
-				$k = "SELECT IDMAX FROM (SELECT CAST(SUBSTR(requirement,4,LENGTH(requirement)) AS UNSIGNED) AS IDMAX FROM Requirements ORDER BY IDMAX DESC ) AS REQUISITIMAX LIMIT 1";
+				$k = "SELECT IDMAX FROM (SELECT CAST(SUBSTR(requirement,4,LENGTH(requirement)) AS UNSIGNED) AS IDMAX FROM Requirements) AS REQUISITIMAX ORDER BY IDMAX DESC LIMIT 1";
 				$q = mysqli_query($link, $k) or die("ERROR: " . $k);
 				$v = $q->fetch_array();
 				$last = $v[0]+1;
@@ -73,11 +92,62 @@
 			$k = "SET FOREIGN_KEY_CHECKS = 1";
 			break;
 
-		case('childDelete'):
 		case('delete'):
-			$k = "delete from Requirements where requirement = '$data[0]'";	
-			break;
 
+			// Save leve onto work
+			$normalize = substr($data[0], 3);
+
+			// Hierarchy of derivation
+			$hierarchy = explode(".", $normalize);
+
+			// Rappresent level of annidation of requirement
+			$level = sizeof($hierarchy);
+
+			// Rappresent actual index of deleted requirement between his brothers
+			$childrenNumber = $hierarchy[$level - 1];
+
+			// Select dad of deleted to fine brother
+			$dad = mysqli_query($link, "select dad from Requirements where requirement = '$data[0]'") or die("ERRORE: while selecting dad of deleted");
+			$dad = $dad->fetch_array();
+			$dad = $dad[0];
+
+			// Delete requiement and children
+			$delete = mysqli_query(connect(), "delete from Requirements where requirement = '$data[0]'") or die("ERRORE: deleting");
+
+			// Disable mysql foreign key check
+			$k = "SET FOREIGN_KEY_CHECKS = 0";
+
+			// Brother Fix
+			$brotherFix = "";
+			if($level > 1)
+				$brotherFix = mysqli_query($link, "select requirement from Requirements where dad = '$dad'") or die("ERRORE: in brother selection");
+			else
+				$brotherFix = mysqli_query($link, "select requirement from Requirements where dad is NULL") or die("ERRORE: in brother selection");
+			while($vBrotherFix = $brotherFix->fetch_array()) {
+				$brotherNum = explode(".", $vBrotherFix[0])[0];
+				$brotherNum = substr($brotherNum, 3);
+				$deletedNum = explode(".", $data[0])[0];
+				$deletedNum = substr($deletedNum, 3);
+				if($brotherNum > $deletedNum) {
+					$newRequirementId = "";
+					if($level == 1) {
+						$newRequirementId = substr($vBrotherFix[0], 0, 3) . $childrenNumber;
+					} else {
+						$tmp = $hierarchy;
+						$tmp[sizeof($tmp) - 1] = $childrenNumber;
+						$newRequirementId = join(".", $tmp);
+					}
+					$childrenNumber++;
+					fixChildren($vBrotherFix[0], $newRequirementId);
+					$fixBrotherRequiement = "update Requirements set requirement = '$newRequirementId' where requirement = '$vBrotherFix[0]'";
+					$qFixBrotherRequirement = mysqli_query($link, $fixBrotherRequiement) or die("ERRORE: " . $fixBrotherRequiement);
+				}
+			}
+
+			// Re-able mysql foreign key check
+			$k = "SET FOREIGN_KEY_CHECKS = 1";
+			break;
+		
 		case('classCombine'):
 			$package = split(':',$data[1])[0];
 			$class = split(':',$data[1])[1];
@@ -114,6 +184,22 @@
 
 		case('usecaseDelete'):
 			$k = "delete from RequirementsUsecases where requirement = '$data[0]' and usecase = '$data[1]'";
+			break;
+
+		case('validationTestInsert'):
+			$k = "insert into ValidationTest values ('$data[0]', '$data[1]', '$data[2]', '$data[3]', '$data[4]')";
+			break;
+
+		case('validationTestStepInsert'):
+			$k = "insert into ValidationTestStep values ('$data[0]', '$data[1]', '$data[2]')";
+			break;
+
+		case('validationTestUpdate'):
+			$k = "update ValidationTest set description = '$data[2]', implemented = '$data[3]', satisfied = '$data[4]' where requirement = '$data[0]' and test = '$data[1]'";
+			break;
+
+		case('validationTestStepDeleteAll'):
+			$k = "delete from ValidationTestStep where test = '$data[0]'";
 			break;
 	}
 	if($k != "") {

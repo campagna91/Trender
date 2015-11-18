@@ -30,10 +30,10 @@ require_once('cgi-bin/__module.php'); ?>
 			logged();
 		?>
 			<div class="row">
-				<div class="col s4">
+				<div id="setting-menu" class="col s4">
 					<? include_once 'cgi-bin/__moduleSettingMenu.php'; ?>
 				</div>
-				<div id="setting-content" class="col s8 blue-grey">
+				<div id="setting-content" class="col s7 blue-grey">
 					<?
 						if(isset($_GET['part'])) {
 							switch($_GET['part']) {
@@ -43,6 +43,14 @@ require_once('cgi-bin/__module.php'); ?>
 
 								case('users'):
 									include_once 'cgi-bin/__moduleSettingUsers.php';
+									break;
+
+								case('prints'):
+									include_once 'cgi-bin/__moduleSettingPrints.php';
+									break;
+
+								case('backup'):
+									include_once 'cgi-bin/__moduleSettingBackup.php';
 									break;
 
 								default:

@@ -1,21 +1,21 @@
 /*
 	Permit direct link without click on link
 */
-$(document).on("click","#mainList tr",function(){
-	switch(document.location.pathname.match(/[^\/]+$/)[0]) {
-		case('requirements.php'): 
-		case('usecases.php'): 
-		case('actors.php'): 
-		case('verbals.php'):
-		case('packages.php'):
-		case('unitTests.php'):
-			location.href = document.location.pathname.match(/[^\/]+$/)[0] + "?id=" + $(this).attr('class').split(/\s+/)[0];
-			break;
-		case('classes.php'): 
-			location.href = document.location.pathname.match(/[^\/]+$/)[0] + "?id=" + $(this).attr('class').split(/\s+/)[0]+"&package=" + $(this).attr('class').split(/\s+/)[1];
-			break;
-	}
-});
+// $(document).on("click","#mainList tr",function(){
+// 	switch(document.location.pathname.match(/[^\/]+$/)[0]) {
+// 		case('requirements.php'): 
+// 		case('usecases.php'): 
+// 		case('actors.php'): 
+// 		case('verbals.php'):
+// 		case('packages.php'):
+// 		case('unitTests.php'):
+// 			location.href = document.location.pathname.match(/[^\/]+$/)[0] + "?id=" + $(this).attr('class').split(/\s+/)[0];
+// 			break;
+// 		case('classes.php'): 
+// 			location.href = document.location.pathname.match(/[^\/]+$/)[0] + "?id=" + $(this).attr('class').split(/\s+/)[0]+"&package=" + $(this).attr('class').split(/\s+/)[1];
+// 			break;
+// 	}
+// });
 
 // Last background-color or row
 var lastCSS = '';

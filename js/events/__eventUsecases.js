@@ -20,24 +20,6 @@ $(document).on("click", "#usecaseInsert", function() {
 	}
 });
 /*
-	Usecases insertion
-
-	Note:
-	When we change value of dadl, maybe usecase
-		will be a child with type (inclusion, ..., etc).
-		Materialize not permit to disable control with 
-		disabled property or hiding select, well controls
-		will do in ajaxCommand (cgi-bin/__ajaxUsecases.php).
-	Here we want only know if a type is set when a dad
-		is select.
-*/
-$(document).on("change", "#dad", function() {
-	if($(this).val() != '')
-		$("#type").addClass('validate');
-	else
-		$("#type").removeClass('validate');
-});
-/*
 	Usecase delete
 */
 $(document).on("click", "#usecaseDelete", function() {

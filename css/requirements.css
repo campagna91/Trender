@@ -1,5 +1,5 @@
 a#addRequirement{
-	position:absolute;
+	position:fixed;
 	bottom:25px;
 	right:25px;
 }
@@ -25,7 +25,7 @@ a.waves-effect{
 	margin:0 auto;
 	margin-top:10px;
 	margin-bottom:10px;
-}
+}	
 div.group > div {
 	margin:40px;
 }

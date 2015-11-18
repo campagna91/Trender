@@ -11,7 +11,7 @@
 	  		<select id="dad"> 
 	  			<option value=''>Select a dad</option>
 	  			<? 
-	  				$q = mysqli_query(connect(), "select * from Requirements");
+	  				$q = mysqli_query(connect(), "select * from Requirements order by substr(requirement, 4, length(requirement))");
 		  			while($v = $q->fetch_array()) { ?>
 		  				<option value="<?echo $v[0]?>"><?echo $v[0]?></option>
 		  			<? }

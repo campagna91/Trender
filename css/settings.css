@@ -1,5 +1,16 @@
 div#setting-content {
 	margin-top: 10px;
-	padding-top:10px;
-	padding-right:0px;
+}
+
+div.darken-1, div.darken-2 {
+	padding:10px;
+}
+span {
+	margin:0px 20px;
+}
+.blue-grey p, .blue-grey h3, .blue-grey h5, .blue-grey h6 {
+	color:white;
+}
+.blue-grey h6 {
+	text-indent:20px;
 }
