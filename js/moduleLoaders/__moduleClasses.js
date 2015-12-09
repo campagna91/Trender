@@ -35,7 +35,6 @@ function loadInsert() {
 	Class method update
 */
 function loadMethodUpdate(data) {
-	alert(data);
 	$("#classesMethodsUpdate").remove();
 	$.ajax({
 		url: 'cgi-bin/__moduleClassesMethodsUpdate.php',
