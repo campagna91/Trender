@@ -292,7 +292,8 @@ $(document).on("click","#classMethodUpdate", function() {
 				$("#updateMethod").text().split(".")[0],
 				$(this).children('a').text().split(':')[1],
 				$(this).children('a').text().split(':')[0],
-				$(this).children('a').attr('data-tooltip')
+				unescape($(this).children('a').attr('data-tooltip')),
+				$("#classMethodsUpdateSignature").val()
 			];
 			sent('classes','paramInsert', data);
 		});
@@ -304,7 +305,7 @@ $(document).on("click","#classMethodUpdate", function() {
 */
 $(document).on("click", "#classMethodUpdateParamInsert", function() {
 	if(formIsValid('classMethodUpdateParamInsert')) {
-		$("#classMethodsUpdateParamsList").append("<div class='chip'><a class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='" + $("#classMethodUpdateParamDescription").val() + "'>" + $("#classMethodUpdateParamType").val() + ":" + $("#classMethodUpdateParamName").val() + "</a><i class='material-icons paramDelete'>close</i></div>");
+		$("#classMethodsUpdateParamsList").append("<div class='chip'><a class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='" + escape($("#classMethodUpdateParamDescription").val()) + "'>" + $("#classMethodUpdateParamType").val() + ":" + $("#classMethodUpdateParamName").val() + "</a><i class='material-icons paramDelete'>close</i></div>");
 		$('.tooltipped').tooltip({delay: 50});
 		selectCurrent('classMethodUpdateParamType', '');
 		$('select').material_select();
@@ -318,7 +319,7 @@ $(document).on("click", "#classMethodUpdateParamInsert", function() {
 */
 $(document).on("click", "#classMethodParamInsert", function() {
 	if(formIsValid('classMethodParam')) {
-		$("#classMethodParamList").append("<div class='chip'><a class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='" + $("#paramDescription").val() + "'>" + $("#paramType").val() + ":" + $("#paramName").val() + "</a><i class='material-icons paramDelete'>close</i></div>");
+		$("#classMethodParamList").append("<div class='chip'><a class='tooltipped' data-position='bottom' data-delay='50' data-tooltip=\"" + $("#paramDescription").val() + "\">" + $("#paramType").val() + ":" + $("#paramName").val() + "</a><i class='material-icons paramDelete'>close</i></div>");
 		$('.tooltipped').tooltip({delay: 50});
 		selectCurrent('paramType', '');
 		$('select').material_select();

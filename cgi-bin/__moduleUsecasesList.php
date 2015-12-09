@@ -17,7 +17,7 @@
 			while($v = $q->fetch_array())
 			{?>
 				<tr class="<?echo $v[0];?>">
-					<td><a href="usecases.php?id=<?echo $v[0];?>"><?echo $v[0];?></a></td>
+					<td class="target"><a href="usecases.php?id=<?echo $v[0];?>"><?echo $v[0];?></a></td>
 					<td><?echo $v[2];?></a></td>
 					<td><?echo $v[3];?></td>
 				</tr><?
@@ -28,4 +28,6 @@
 		</tbody>
 	</table>
 </div>
-
+<script>
+	truncate("mainList");
+</script>

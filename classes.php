@@ -92,7 +92,7 @@
 							// Module required to perform update actions on classes's attributes
 							include_once '__moduleClassesAttributesUpdate.php';
 
-							// Module required to perform action on classes's method
+							// Module required to perform action on classes's method_exists(object, method_name)
 							include_once '__moduleClassesMethods.php';
 
 						?>

@@ -54,6 +54,7 @@
 			break;
 
 		case('attributeInsert'):
+			$data[3] = mysqli_real_escape_string($link, $data[3]);
 			$k = "insert into ClassAttributes values ('$data[0]', '$data[1]', '$data[2]', '$data[3]', '$data[4]')";
 			break;
 
@@ -66,10 +67,12 @@
 			break;
 
 		case('methodInsert'):
+			$data[4] = mysqli_real_escape_string($link, $data[4]);
 			$k = "insert into ClassMethods values ('$data[0]', '$data[3]', '$data[2]', '$data[4]', '$data[1]')";
 			break;
 
 		case('paramInsert'):
+			$data[6] = mysqli_real_escape_string($link, $data[6]);
 			$k = "insert into ClassMethodsParams values ('$data[0]', '$data[1]', '$data[2]', '$data[3]', '$data[4]', '$data[5]', '$data[6]')";
 			break;
 
@@ -82,6 +85,7 @@
 			break;
 
 		case('methodUpdate'):
+			$data[6] = mysqli_real_escape_string($link, $data[6]);
 			$k = "update classMethods set signature = '$data[4]', returnType = '$data[5]', description = '$data[6]' where class = '$data[0]' and package = '$data[1]' and signature = '$data[2]' and returnType = '$data[3]'";
 			break;
 

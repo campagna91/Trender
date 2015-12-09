@@ -14,9 +14,9 @@ require_once '__system.php'; ?>
 		<?
 			$q = mysqli_query(connect(), "select * from Classes")or die("err list");
 			while($v = $q->fetch_array()) { ?>
-				<tr class="<? echo $v[0]." ".$v[3] ?>">
-					<td><? echo $v[0] ?></td>
-					<td><? echo $v[3] ?></td>
+				<tr class="<? echo $v[0] . " " . $v[3] ?>">
+					<td class="target"><? echo $v[0] ?></td>
+					<td><a href="packages.php?id=<? echo $v[3] ?>"><? echo $v[3] ?></a></td>
 					<td><? echo $v[1] ?></td>
 					<td><? echo $v[2] ?></td>
 				</tr>

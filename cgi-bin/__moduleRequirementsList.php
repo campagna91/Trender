@@ -16,8 +16,7 @@
 					if(!$child) $k = "select * from Requirements where dad is NULL ORDER BY substring(requirement, 4, length(requirement))";
 					else $k = "select * from Requirements where dad = '$id' order by substring(requirement, 4, length(requirement))";
 					$q = mysqli_query(connect(),$k) or die("MODLISTRECURSIVE : (requirement) ".$k);
-					while($v = $q->fetch_array())
-					{?>
+					while($v = $q->fetch_array()) { ?>
 						<tr class="<? echo $v[0] ?>">
 							<td><a href="requirements.php?id=<? echo $v[0] ?>"><? echo printNesting($v[0]) ?></a></td>
 							<td><a href="requirements.php?id=<? echo $v[1] ?>"><? echo $v[1] ?></a></td>

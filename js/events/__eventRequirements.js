@@ -149,15 +149,14 @@ $(document).on("click", "#requirementUsecaseCombine", function() {
 	Requirement usecase delete
 */
 $(document).on("click", ".requirementUsecaseDelete", function() {
-	console.log($(this).parent().html());
-	// var data = [
-	// 	$("#id").text(),
-	// 	$(this).parent().parent().attr('id')
-	// ];
-	// sent('requirements', 'usecaseDelete', data);
-	// $(this).parent().parent().remove();
-	// $("#requirementUsecaseName").append("<option value=" + data[1] + ">" + text + "</option>");
-	// $('select').material_select();
+	var data = [
+		$("#id").text(),
+		$(this).parent().parent().attr('id')
+	];
+	sent('requirements', 'usecaseDelete', data);
+	$(this).parent().parent().remove();
+	$("#requirementUsecaseName").append("<option value=" + data[1] + ">" + text + "</option>");
+	$('select').material_select();
 });
 
 $(document).on("click", "#requirementValidationTestAddStep", function() {

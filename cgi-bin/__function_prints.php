@@ -225,9 +225,12 @@
 
 	function toolUsecasePrint($v) {
 		write("\\subsubsection{" . $v[0] . " - " . $v[2] . "} ");
-		if(strlen($v[7]) > 5) {
+		if(strlen($v[7]) > 0) {
 			write("\\begin{figure}[h!] \n" . "\\centering \n");
-			write("\\includegraphics[scale=0.5]{" . $v[7] . "} \n");
+			if($v[0] == "UC1")
+				write("\\includegraphics[scale=0.3]{" . $v[7] . "} \n");
+			else 
+				write("\\includegraphics[scale=0.5]{" . $v[7] . "} \n");
 			write("\\caption{" . $v[8] . "} \n \\end{figure} \n");
 		}
 		write("\\begin{itemize} \n");
@@ -473,7 +476,281 @@
 	    while($v = $q->fetch_array()) {
 	    	write("TI" . $v[1] . " & " . $v[2] . " & " . "");
 	    }
-
 	}
+
+	function toolPackageNamespace($package) {
+		$k = "select dad from Packages where package = '$package'";
+		$q = mysqli_query(connect(), $k) or die("ecc");
+		if($v = $q->fetch_array()) {
+			if(strlen($v[0]) > 0)
+				return toolPackageNamespace($v[0]) . "::" . $package;
+			else 
+				return $package;
+		} else {
+			return $package;
+		}
+	}
+
+	function toolPackageHasClass($package) {
+		$k = "select class from Classes where package = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione delle classi del package");
+		$n = mysqli_num_rows($q);
+		return $n > 0;
+	}
+
+	function toolPackageClassHasAttribute($class, $package) {
+		$k = "select * from ClassAttributes where class = '$class'";
+		$q = mysqli_query(connect(), $k) or die("Errore nell\'accertamento della presenza di attributi");
+		$n = mysqli_num_rows($q);
+		return $n > 0;
+	}
+
+	function toolPackageClassAttribute($class, $package) {
+		$k = "select * from ClassAttributes where package = '$package' and class = '$class'"; 
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione degli attributi di classe");
+		while($v = $q->fetch_array()) {
+			write("\\begin{itemize}\n");
+			write("\\item \\texttt{" . $v[1] . ": " . $v[2] . "}\\ \n\n " . $v[3] . ".\n");
+			write("\\end{itemize}\n");
+		}
+	}
+
+	function toolPackageClassHasMethod($class, $package) {
+		$k = "select * from ClassMethods where class = '$class' and package = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione dei metodi di classe " . $k);
+		$n = mysqli_num_rows($q);
+		return $n > 0;
+	}
+
+	function toolPackageClassMethodParamsList($signature, $class, $package) {
+		$list = "";
+		$k = "select * from ClassMethodsParams where signature = '$signature' and class = '$class' and package = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione delle lista degli argomenti");
+		$n = mysqli_num_rows($q);
+		while($v = $q->fetch_array()) {
+			$list .= $v[4]; 
+			$n--;
+			if($n) 
+				$list .= ", ";
+		}
+		return $list;
+	}
+
+	function toolPackageClassMethodParams($signature, $class, $package) {
+		$k = "select * from ClassMethodsParams where signature = '$signature' and package = '$package' and class = '$class'";
+		$q = mysqli_query(connect(), $k) or die("Errore durantela selezione dei metodi ");
+		while($v = $q->fetch_array()) {
+			write("\\item \\texttt{" . $v[4] . " : " . $v[5] . "}\\ \n\n " . $v[6] . ". \n");
+		}
+	}
+
+	function toolPackageClassMethodHasParams($signature, $class, $package) {
+		$k = "select * from ClassMethodsParams where signature = '$signature' and package = '$package' and class = '$class'";
+		$q = mysqli_query(connect(), $k) or die("Errore nell\'accertamente dell\'esistenza dei metodi di classe");
+		$n = mysqli_num_rows($q);
+		return $n > 0;
+	}
+
+	function toolPackageClassMethod($class, $package) {
+		$k = "select * from ClassMethods where class = '$class' and package = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione dei metodi della classe " . $k);
+		while($v = $q->fetch_array()) {
+			write("\\begin{itemize}\n");
+			write("\\item \\texttt{" . $v[1] . " (" . toolPackageClassMethodParamsList($v[1], $class, $package) .  ")  : " . $v[2] . "}\\ \n\n " . $v[3] . "\n");
+			if(toolPackageClassMethodHasParams($v[1], $class, $package)) {
+				write("\n\\item \\textbf{Argomenti}:\n");
+				write("\\begin{itemize}\n");
+				toolPackageClassMethodParams($v[1], $class, $package);
+				write("\\end{itemize}\n");
+			}
+			write("\\end{itemize}\\vspace{0.5em}\n");
+		}
+	}
+
+	function toolPackageClassHasRelations($class, $package) {
+		$k = "select classEnd from ClassRelations where classStart = '$class' and packageStart = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione delle relazioni di classe");
+		$n = mysqli_num_rows($q);
+		return $n > 0;
+	}
+
+	function toolPackageclassRelations($class, $package) {
+		$k = "select classEnd, packageEnd from ClassRelations where classStart = '$class' and packageStart = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione delle classi in relazione");
+		$n = mysqli_num_rows($q);
+		write("\\begin{itemize}\n");
+		while($v = $q->fetch_array()) {
+			$k = "select description from Classes where class = '$v[0]' and package = '$v[1]'";
+			$qClass = mysqli_query(connect(), $k) or die("Errore durante il reperimento delle informazioni della classe relazionata");
+			$vClass = $qClass->fetch_array();
+			$description = $vClass[0];
+			write("\\item \\texttt{" . toolPackageNamespace($v[1]) . "::" . $v[0] . "}: " . $vClass[0]);
+			$n--;
+			if($n)
+				write(";\n");
+			else 
+				write(".\n");
+		}
+		write("\\end{itemize}\n");
+	}
+
+	function toolPackageClass($package) {
+		$k = "select * from Classes where package = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore nella selezione delle classi di package");
+		while($v = $q->fetch_array()) {
+			$aux = $package;
+			write("\\subparagraph{\\texttt{" . toolPackageNamespace($package) . "::" . $v['class'] . "}} \n");
+			write("\\begin{itemize}");
+			write("\\item \\textbf{Descrizione}: " . $v[1] . "\n");
+			write("\\item \\textbf{Utilizzo}: " . $v[2] . "\n");
+			if(toolPackageClassHasAttribute($v[0], $package)) {
+				write("\\item \\textbf{Attributi}:\n");
+				toolPackageClassAttribute($v[0], $package);
+			}
+			if(toolPackageClassHasMethod($v[0], $package)) {
+				write("\\item \\textbf{Metodi}:\n");
+				toolPackageClassMethod($v[0], $package);	
+			}
+			if(toolPackageClassHasRelations($v[0], $package)) {
+				write("\\item \\textbf{Relazioni con altre classi}:\n");
+				toolPackageClassRelations($v[0], $package);
+			} 
+			write("\\end{itemize}");
+		}	
+	}
+
+	function toolPackageContainsPackage($package) {
+		$k = "select package from Packages where dad = '$package'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione dei package figlio");
+		$n = mysqli_num_rows($q);
+		return $n > 0;
+	}
+
+	function toolPackageContainedPackages($dad) {
+		$k = "select package, description from Packages where dad = '$dad'";
+		$q = mysqli_query(connect(), $k) or die("Errore di stampa dei figli del package");
+		write("\\begin{itemize}");
+		while($v = $q->fetch_array()) {
+			write("\\item " . toolPackageNamespace($v[0]) . ": " . $v[1] . "\n");
+		}
+		write("\\end{itemize}");
+	}
+
+	function toolPackagePrint($dad) {
+		if($dad == '')
+			$k = "select * from Packages where dad is NULL and package != 'Default'";
+		else 
+			$k = "select * from Packages where dad = '$dad'";
+		$q = mysqli_query(connect(), $k) or die("Errore selezione informazione package");
+		while($v = $q->fetch_array()) {
+			$aux = $v[0];
+			write("\\subsubsection{Componente \\texttt{" . toolPackageNamespace($v[0]) . "}}");
+			write("\\myparagraph{Informazioni sul package}");
+			if(strlen($v[3]) > 0) {
+				write("\\begin{figure}[h!] \n" . "\\centering \n");
+				write("\\includegraphics[scale=0.4]{" . $v[3] . "} \n");
+				write("\\caption{" . $v[4] . "} \n \\end{figure} \n");
+			}
+			write("\\begin{itemize}");
+			write("\\item \\textbf{Descrizione}: " . $v[2]);
+			if(strlen($v[1]) > 0)
+				write("\\item \\textbf{Padre}: " . $v[1]);
+			//write("\\item \\textbf{Interazione con altri package}:\n");
+			if(toolPackageContainsPackage($v[0])) {
+				write("\\item \\textbf{Package contenuti}:\n");
+				toolPackageContainedPackages($v[0]);
+			}
+			if(toolPackageHasClass($v[0])) {
+				write("\\myparagraph{Classi}\n");
+				toolPackageClass($v[0]);
+			}
+			write("\\end{itemize}\n");
+			toolPackagePrint($v[0]);
+		}
+	}
+
+	function dpPackage() {
+		toolPackagePrint('');
+	}
+
+	
+
+	function toolRequirementClassCombined($requirement) {
+		$aux = [];
+		$k = "select package, class from RequirementsClasses where requirement = '$requirement'";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione delle classi associate");
+		while($v = $q->fetch_array()) {
+			$cl = toolPackageNamespace($v[0]);
+			$cl .= "::" . $v[1];
+			array_push($aux, $cl);
+		}
+		return $aux;
+	}
+
+	function toolClassRequirementCombined($class, $package) {
+		$aux = [];
+		$k = "select requirement from RequirementsClasses where package = '$package' and class = '$class' ";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione dei requisiti associati alla classe");
+		while($v = $q->fetch_array()) {
+			array_push($aux, $v[0]);
+		}
+		return $aux;
+	}
+
+
+
+	function stTrackingRequirementClass() {
+		write("\\def\arraystretch{1.5}\n");
+	    write("\\rowcolors{2}{D}{P}\n");
+	    write("\\begin{longtable}{p{2.5cm}!{\\VRule[1pt]}p{8.5cm}}\n");
+	    write("\\rowcolor{I}\n");
+	    write("\\color{white} \\textbf{Requisito} & \\color{white} \\textbf{Classi} \\\\ \n");
+	    write("\\endfirsthead \n");
+	    write("\\rowcolor{I} \n");
+	    write("\\color{white} \\textbf{Requisito} & \\color{white} \\textbf{Classi} \\\\ \n");
+	    write("\\endhead \n");
+	    $k = "select requirement from Requirements order by SUBSTR(requirement, 1, 1), SUBSTR(requirement, 3, LENGTH(requirement))";
+	    $q = mysqli_query(connect(), $k) or die("ERRORE: " . $k);
+	    while($v = $q->fetch_array()) {
+	    	write($v[0] . " & ");
+	    	$classes = toolRequirementClassCombined($v[0]);
+			foreach($classes as $key => $value) {
+				write("\\texttt{" . $value . "}");
+				if($key < count($classes) - 1)
+					write(" \\newline \n");
+			}
+			write(" \\\\\n");
+	    }
+	    write("\\rowcolor{white}" . "\n\\caption{Tracciamento requisiti-classi}" . "\n\\end{longtable}");
+	}
+
+	function stTrackingClassRequirement() {
+		write("\\def\arraystretch{1.5}\n");
+	    write("\\rowcolors{2}{D}{P}\n");
+	    write("\\begin{longtable}{p{8.5cm}!{\\VRule[1pt]}p{2.5cm}}\n");
+	    write("\\rowcolor{I}\n");
+	    write("\\color{white} \\textbf{Classe} & \\color{white} \\textbf{Requisiti} \\\\ \n");
+	    write("\\endfirsthead \n");
+	    write("\\rowcolor{I} \n");
+	    write("\\color{white} \\textbf{Classe} & \\color{white} \\textbf{Requisiti} \\\\ \n");
+	    write("\\endhead \n");
+	    $k = "select class, package from Classes order by package";
+	    $q = mysqli_query(connect(), $k) or die("ERRORE: " . $k);
+	    while($v = $q->fetch_array()) {
+	    	$cl = toolPackageNamespace($v[1]);
+	    	$cl .= "::" . $v[0];
+	    	write("\\texttt{" . $cl . "} & ");
+	    	$requirements = toolClassRequirementCombined($v[0], $v[1]);
+			foreach($requirements as $key => $value) {
+				write($value);
+				if($key < count($requirements) - 1)
+					write(" \\newline \n");
+			}
+
+			write(" \\\\\n");
+	    }
+	    write("\\rowcolor{white}" . "\n\\caption{Tracciamento classi-requisiti}" . "\n\\end{longtable}");
+	}
+
 
 ?>

@@ -39,7 +39,7 @@
 				if($data[1] == '')
 					$k = mysqli_query($link, "UPDATE Packages SET package = '$data[2]', dad = NULL, description = '$data[3]', imagePath = '$data[4]', didascalia = '$data[5]' where package = '$data[0]'") or die("ERROR");
 				else
-					$k = mysqli_query($link, "UPDATE Packages SET package = '$data[2]', dad = '$data[1]', $datadescription = '$data[3]', imagePath = '$data[4]', didascalia = '$data[5]' where package = '$data[0]'") or die("ERROR");
+					$k = mysqli_query($link, "UPDATE Packages SET package = '$data[2]', dad = '$data[1]', description = '$data[3]', imagePath = '$data[4]', didascalia = '$data[5]' where package = '$data[0]'") or die("ERROR");
 
 				// Update child row
 				$fix = mysqli_query($link, "update Packages set dad = '$data[2]' where dad = '$data[0]'") or die("ERROR");

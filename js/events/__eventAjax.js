@@ -64,7 +64,7 @@ function sent(section, type, dataSent){
 				case('delete'):
 					loadInsert();
 					loadList();
-					//location.href="" + section + ".php";
+					location.href="" + section + ".php";
 					break;
 			}
 		}

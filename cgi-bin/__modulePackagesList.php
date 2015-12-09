@@ -39,8 +39,8 @@
 				else 
 					$inst = 0; ?>
 				<tr class="<? echo $v[0] ?>">
-					<td><? echo $v[0] ?></td>
-					<td><? echo $v[1] ?></td>
+					<td class="target"><a href="packages.php?id=<? echo $v[0] ?>"><? echo $v[0] ?></a></td>
+					<td><a href="packages.php?id=<? echo $v[1] ?>"><? echo $v[1] ?></a></td>
 					<td><? echo $v[2] ?></td>
 					<td class="center"><? echo $af ?></td>
 					<td class="center"><? echo $ef ?></td>
@@ -53,4 +53,6 @@
 		?>
 	</table>
 </div>
-
+<script>
+	truncate("mainList");
+</script>
