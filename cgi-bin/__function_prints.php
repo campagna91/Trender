@@ -227,9 +227,11 @@
 		write("\\subsubsection{" . $v[0] . " - " . $v[2] . "} ");
 		if(strlen($v[7]) > 0) {
 			write("\\begin{figure}[h!] \n" . "\\centering \n");
-			if($v[0] == "UC1")
+			if($v[0] == "UC1.2.1" || $v[0] == "UC1.3" || $v[0] == "UC1.4" || $v[0] == "UC1.5" || $v[0] == "UC1.6")
+				write("\\includegraphics[scale=0.4]{" . $v[7] . "} \n");
+			else if($v[0] == "UC1")
 				write("\\includegraphics[scale=0.3]{" . $v[7] . "} \n");
-			else 
+			else
 				write("\\includegraphics[scale=0.5]{" . $v[7] . "} \n");
 			write("\\caption{" . $v[8] . "} \n \\end{figure} \n");
 		}
@@ -316,10 +318,11 @@
 	}
 
 	function toolRequirementTranslateSatisfiedField($field) {
-		if($field == 'satisfied')
-			return '{\color{green}Soddisfatto}';
-		else 
-			return '{\color{red}Non soddisfatto}';
+		echo $field . "\n";
+		$aux = "{\color{green} Soddisfatto}";
+		if($field != "satisfied")
+			$aux = "{\color{red} Non soddisfatto}";
+		return $aux;
 	}
 
 	function toolRequirementHeadSatisfied() {
@@ -648,7 +651,10 @@
 			write("\\myparagraph{Informazioni sul package}");
 			if(strlen($v[3]) > 0) {
 				write("\\begin{figure}[h!] \n" . "\\centering \n");
-				write("\\includegraphics[scale=0.4]{" . $v[3] . "} \n");
+				if($v[0] == 'matrix' || $v[0] == 'totp')
+					write("\\includegraphics[scale=0.25]{" . $v[3] . "} \n");
+				else
+					write("\\includegraphics[scale=0.4]{" . $v[3] . "} \n");
 				write("\\caption{" . $v[4] . "} \n \\end{figure} \n");
 			}
 			write("\\begin{itemize}");

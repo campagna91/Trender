@@ -8,7 +8,7 @@
 	$data = $_POST['data'];
 
 	// Query to perform
-	$k = "";
+	$k = ""; $k1 = "";
 
 	// Database connection
 	$link = connect();
@@ -79,15 +79,16 @@
 					udpating we re-able option.
 			*/
 
+			$k1 = "SET FOREIGN_KEY_CHECKS = 0" . "UPDATE Requirements SET requirement = '$id', description = '$data[1]', satisfied = '$data[5]' where requirement = '$data[0]'" . "update Requirements set dad = '$id' where dad = '$data[0]'" . "SET FOREIGN_KEY_CHECKS = 1";
 			// Disable mysql foreign key check
 			$fix = mysqli_query($link, "SET FOREIGN_KEY_CHECKS = 0")or die("ERROR: ");
-
+			
 			// Update parent row
 			$k = mysqli_query($link, "UPDATE Requirements SET requirement = '$id', description = '$data[1]', satisfied = '$data[5]' where requirement = '$data[0]'")or die("ERROR");
-
+			
 			// Update child row
 			$fix = mysqli_query($link, "update Requirements set dad = '$id' where dad = '$data[0]'")or die("ERROR: ");
-
+			
 			// Re-able mysql foreign key check
 			$k = "SET FOREIGN_KEY_CHECKS = 1";
 			break;
@@ -206,7 +207,7 @@
 		if(!mysqli_query($link, $k)) 
 			echo "ERROR ". $typeRequest ."\n" . $k;
 		else {
-			echo $k;
+			echo "OPERAZIONE ESEGUITA CON SUCCESSO";
 		}
 	}
 ?>

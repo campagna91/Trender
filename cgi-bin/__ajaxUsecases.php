@@ -26,7 +26,7 @@
 			{
 				$max = 0;
 				$leveldad = count(explode(".", $data[0]));
-				$k = mysqli_query($link, "select usecase from Usecases");
+				$k = mysqli_query($link, "select usecase from Usecases where dad = '$data[0]'");
 				while($v = $k->fetch_array()) {
 					$levelsV = explode(".", $v[0]);
 					$levelV = count($levelsV);
