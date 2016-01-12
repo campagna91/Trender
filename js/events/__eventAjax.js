@@ -54,7 +54,10 @@ function sent(section, type, dataSent){
 			'data':dataSent,
 		},
 		success:function(data) {
-			console.log(data);
+			if(data.substring(0, 4) == 'ERROR')
+				Materialize.toast("ERRORE DURANTE L'ESECUZIONE DEL COMANDO", 2000);
+			else 
+				Materialize.toast("COMANDO ESEGUITO CORRETTAMENTE", 2000);
 			switch(type) {
 				case('insert'):
 					loadInsert();

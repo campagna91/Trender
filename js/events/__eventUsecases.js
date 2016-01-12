@@ -11,7 +11,7 @@ $(document).on("click", "#usecaseInsert", function() {
 			$("#precondition").val(),
 			$("#postcondition").val(),
 			$("#scene").val(),
-			$("#alternativescene").val(),
+			$("#alternativeScene").val(),
 			$("#didascalia").val(),
 			$("#imagePath").val()
 		];
