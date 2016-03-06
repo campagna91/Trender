@@ -28,6 +28,9 @@
 		</tbody>
 	</table>
 </div>
+
 <script>
-	truncate("mainList");
+	truncate('mainList');
+	truncate('mainList');
+	truncate('mainList');
 </script>

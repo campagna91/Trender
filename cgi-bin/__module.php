@@ -14,6 +14,7 @@ function mainList() { ?>
 				case('packages.php'):	 include_once('__modulePackagesList.php');	break; 
 				case('classes.php'):	 include_once('__moduleClassesList.php');	break; 
 				case('unitTests.php'):	include_once('__moduleUnitTestsList.php'); break;
+				case('glossary.php'): include_once('__moduleGlossaryList.php'); break;
 			} ?>
 		</div> <?
 }

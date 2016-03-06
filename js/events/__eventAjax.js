@@ -43,8 +43,13 @@ function sent(section, type, dataSent){
 
 		case('backups'):
 			path = "cgi-bin/__ajaxBackups.php";
+
+		case('glossary'):
+			path = "cgi-bin/__ajaxGlossary.php";
+			break;
 	}
 	console.log(dataSent);
+	console.log(type);
 	$.ajax({
 		url: path,
 		type:'post',
@@ -54,6 +59,7 @@ function sent(section, type, dataSent){
 			'data':dataSent,
 		},
 		success:function(data) {
+			console.log(data);
 			if(data.substring(0, 4) == 'ERROR')
 				Materialize.toast("ERRORE DURANTE L'ESECUZIONE DEL COMANDO", 2000);
 			else 

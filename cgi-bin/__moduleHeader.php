@@ -30,6 +30,9 @@
       <li><a href="packages.php">Packages</a></li>
       <li><a href="classes.php">Classes</a></li>
       <li><a href="unitTests.php">Tests</a></li>
+      <li><a href="glossary.php">Glossary</a></li>
+      <li><a href="settings.php?part=prints">Prints</a></li>
+      <li><a href="settings.php?part=backup">Tools</a></li>
       
       <li><a href="settings.php"><i class="material-icons">settings</i></a></li>
       <li><a href="index.php?logout"><i class="material-icons">exit_to_app</i></a></li>
@@ -42,8 +45,9 @@
       <li><a href="packages.php">Packages</a></li>
       <li><a href="classes.php">Classes</a></li>
       <li><a href="unitTests.php">Tests</a></li>
-      <li><a href="prints.php">Prints</a></li>
-      <li><a href="tools.php">Tools</a></li>
+      <li><a href="glossary.php">Glossary</a></li>
+      <li><a href="settings.php?part=prints">Prints</a></li>
+      <li><a href="settings.php?part=backup">Tools</a></li>
       
       <li><a href="settings.php"><i class="material-icons left">settings</i>Setting</a></li>
       <li><a href="index.php?logout"><i class="material-icons left">exit_to_app</i>Logout</a></li>

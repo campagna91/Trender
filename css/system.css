@@ -53,3 +53,9 @@ td a{
 td a:hover{
 	color:orange;
 }
+
+a.btn-floating {
+	position:fixed;
+	bottom:25px;
+	right:25px;
+}

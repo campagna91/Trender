@@ -224,7 +224,8 @@
 	}
 
 	function toolUsecasePrint($v) {
-		write("\\subsubsection{" . $v[0] . " - " . $v[2] . "} ");
+		write("\\subsubsection{" . $v[0] . " - " . $v[2] . "} \n");
+		write("\\label{sssec:$v[0]} \n");
 		if(strlen($v[7]) > 0) {
 			write("\\begin{figure}[h!] \n" . "\\centering \n");
 			if($v[0] == "UC1.2.1" || $v[0] == "UC1.3" || $v[0] == "UC1.4" || $v[0] == "UC1.5" || $v[0] == "UC1.6")
@@ -756,6 +757,21 @@
 			write(" \\\\\n");
 	    }
 	    write("\\rowcolor{white}" . "\n\\caption{Tracciamento classi-requisiti}" . "\n\\end{longtable}");
+	}
+
+	function glVoices() {
+		$letters = array();
+		$k = "select * from Glossary";
+		$q = mysqli_query(connect(), $k) or die("Errore durante la selezione delle voci di glossario");
+		while($v = $q->fetch_array()) {
+			if(!in_array(substr($v[0], 0, 1), $letters)) {
+				array_push($letters, strtoupper(substr($v[0], 0, 1)));
+				write("\\vspace{1cm}");
+				write("\\hfill \\textbf{\Huge " . strtoupper(substr($v[0], 0, 1)) . " } \n ");
+			}
+			write("\\subsection*{" . $v[0] . "} \n ");
+			write($v[1] . ".\\\\ \n ");
+		}
 	}
 
 

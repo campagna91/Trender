@@ -62,6 +62,11 @@ switch(document.location.pathname.match(/[^\/]+$/)[0]){
 	case('settings.php'):
 		$.getScript('js/events/__eventSettings.js');
 		break;
+
+	case('glossary.php'):
+		$.getScript('js/moduleLoaders/__moduleGlossary.js');
+		$.getScript('js/events/__eventGlossary.js');
+		break;		
 }
 
 // Need for graphic library

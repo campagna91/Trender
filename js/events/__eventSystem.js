@@ -7,6 +7,7 @@ $(document).on("click","#mainList tr td.target",function(){
 		case('usecases.php'): 
 		case('actors.php'): 
 		case('verbals.php'):
+		case('glossary.php'):
 		case('packages.php'):
 		case('unitTests.php'):
 			location.href = document.location.pathname.match(/[^\/]+$/)[0] + "?id=" + $(this).parent().attr('class').split(/\s+/)[0];
