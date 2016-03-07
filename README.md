@@ -18,6 +18,15 @@ Entrando nelle impostazioni sarà inoltre possibile selezionare le stampe richie
 E' risaputo che qualcuno del gruppo potrebbe fare il macello con la base di dati o che per disservizi relativi al sevizio di hosting questi vengano persi. Dunque è possibile sempre dalle impostazioni fare il backup della base di dati e ripristinarli in un tempo successivo tramite i comandi appositi.
 ![Backup informazioni](https://raw.githubusercontent.com/campagna91/Trender/master/public/settings.png)
 
+### Installazione
+Per l'installazione del servizio sono necessari 4 semplici accorgimenti.
+1. Accertarsi che i file abbiano correttamente i permessi settati;
+2. Da una shell mysql dare il comando "source" seguito dal path relativo al file "install.sql" presente nella cartella "mysql" del servizio: il comando installerà la base di dati ed i tipi di default richiesti (dataNeed.sql);
+3. Modificare nel file "Trender/cgi-bin/__ajaxBackups.php" alle righe 23 e 30 il path relativo l'utilità "mysqldump" necessaria per effettuare il backup della base di dati;
+4. Includere negli eventuali fogli ".tex" i comandi presenti nella cartella "latexCommand" nella root del servizio.
+
+Le credenziali per il servizio sono di default settate ad "admin" sia per lo username che per la password. Per modificarle sarà sufficiente recarsi sempre nel file "dataNeed.sql" e modificarle nella prima riga.
+
 ### BUG
 Un bug noto è non sanato è stato riscontrato nel nome dei metodi per il quale è richiesto lo stile di scrittura CamelCase. Per altre segnalazioni (se non risolvibili da voi visto che siete informatici) scrivete a campagna.simone.91@gmail.com con oggetto "BUG_Trender"
 
