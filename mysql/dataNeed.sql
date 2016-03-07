@@ -1,0 +1,5 @@
+INSERT INTO Admin values ('admin', 'admin');
+
+INSERT INTO Packages (package, description) values ('Default', 'Default package for all type request by project but not mentionated');
+
+INSERT INTO Settings_Prints (`voice`, `active`) VALUES ('arFunctionalRequirement', 1), ('arQualitativeRequirement', 1), ('arBindingRequirement', 1), ('arPerformanceRequirement', 1), ('arResume', 1), ('arUsecase', 1), ('arTrackingRequirementSource', 1), ('arTrackingSourceRequirement', 1), ('arSatisfiedObbligatory', 1), ('arSatisfiedDesiderable', 1), ('arSatisfiedOptional', 1), ('arTrackingRequirementTestValidationSystem', 1), ('pqTestValidation', 1), ('pqTestSystem', 1), ('pqTestIntegration', 1), ('pqTestUnit', 1), ('pqTrackingComponentTest', 1), ('pqTrackingClassMethodTest', 1), ('pqDesignInstability', 1), ('pqMetricsSatisfiement', 1), ('pqCodeCoverage', 1), ('stTrackingClassRequirement', 1), ('stTrackingRequirementClass', 1), ('dpPackage', 1), ('glVoices', 1);

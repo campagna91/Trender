@@ -1,6 +1,5 @@
 cgi-bin/__system.php
 latex/*
-mysql/*
 backup/*
 image/*
 .DS_store
