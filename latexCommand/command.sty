@@ -1,0 +1,85 @@
+%
+% COMANDI 
+%
+% Voce di glossario
+\newcommand{\gl}[1]{\textit{#1}\ped{g}}
+% Standard ISO
+\newcommand{\iso}[1]{$[$#1$]$}
+% Request for comment
+\newcommand{\rfc}[2]{$[RFC$ #1$:$#2$]$}
+% Programming language
+\newcommand{\langProg}[1]{\textit{#1}}
+% Screenshot figure in 5 format
+\newcommand{\screenXS}[2]{\begin{figure}[!ht]\centering \includegraphics[width=5cm]{media/#1}	\caption{#2}\end{figure}}
+\newcommand{\screenS}[2]{\begin{figure}[!ht]\centering \includegraphics[width=7.5cm]{media/#1}	\caption{#2}\end{figure}}
+\newcommand{\screenM}[2]{\begin{figure}[!ht]\centering \includegraphics[width=9.5cm]{media/#1}	\caption{#2}\end{figure}}
+\newcommand{\screenL}[2]{\begin{figure}[!ht]\centering \includegraphics[width=11.5cm]{media/#1}	\caption{#2}\end{figure}}
+\newcommand{\screenLL}[2]{\begin{figure}[!ht]\centering \includegraphics[width=12cm]{media/#1}	\caption{#2}\end{figure}}
+\newcommand{\screenLLL}[2]{\begin{figure}[!ht]\centering \includegraphics[width=12.5cm]{media/#1}	\caption{#2}\end{figure}}
+\newcommand{\screenXL}[2]{\begin{figure}[!ht]\centering \includegraphics[width=13.5cm]{media/#1}	\caption{#2}\end{figure}}
+\newcommand{\screenXXL}[2]{\begin{figure}[!ht]\centering \includegraphics[width=15.5cm]{media/#1}	\caption{#2}\end{figure}}
+% Voci tabulari rientrate piccole
+\newcommand{\primary}[1]{{\small  #1}}
+% Voci tabulari innestate piccole
+\newcommand{\voice}[1]{{\small \ \ \ #1}}
+\newcommand{\y}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle;}%
+\newcommand{\n}[2][green,fill=green]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}%
+\newcommand{\m}[2][orange,fill=orange]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}%
+\newcommand{\nn}[2][blue,fill=blue]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}%
+\newcommand{\detach}{\\ \vspace{0.5cm}}
+% Intestazioini di colonna verticali
+\def\RB#1{\rotatebox{90}{#1}}
+%
+% FORMATO TESTO
+%
+% Testo centrato e spaziato dal resto
+\newcommand{\highlight}[1]{\vspace{1em}\\\hspace*{\fill}#1\hspace*{\fill}\vspace{1em}\\}
+% Nome di file
+\newcommand{\file}[1]{\textit{#1}}
+% Riferimenti sottolineati
+\newcommand{\refer}[1]{\underline{\ref{#1}}}
+% Riferimenti a package, classi e metodi
+\newcommand{\referMono}[2]{\underline{\ref{\texttt{#1}}}}
+% Nome package, classi e metodi
+\newcommand{\mono}[1]{\texttt{#1}}
+%
+% COLORI
+%
+% Intestazione tabelle
+\definecolor{I}{HTML}{B40404}
+% Intestazione gruppi
+\definecolor{G}{HTML}{AB5454}
+% Righe dispari tabelle
+\definecolor{D}{HTML}{F5A9A9}
+% Righe pari tabelle
+\definecolor{P}{HTML}{F8E0E0}
+
+%
+% TABELLE
+%
+% Riga di separazione tra le colonne
+\newcommand\VRule[1][\arrayrulewidth]{\color{white} \vrule width 1pt}
+
+%
+% INTESTAZIONI
+%
+\def\HaF{
+    \pagestyle{fancy}
+    \lhead{Simone Campagna}
+    \lfoot{Tesi di Laurea}
+    \cfoot{}
+    \rfoot{Pagina \thepage{} di \pageref{LastPage}}
+    \renewcommand{\footrulewidth}{0.2pt}
+    }
+    
+%
+%PARAGRAFI
+%
+% Formattazione paragrafo
+\newcommand{\myparagraph}[1]{\paragraph{#1}\hfill\vspace{0.2cm}\noindent}
+% Formattazione sottoparagrafo
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {0.0001pt \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+                                     
