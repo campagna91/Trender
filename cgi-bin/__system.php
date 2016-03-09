@@ -41,27 +41,31 @@ function printNesting($id){
 }
 function testIsSet($id){
 	/*
-		ritorna se i test pertinenti l'id passato sono completi. 
-		più nello specifico ritorna per i padri i valori: 
-			0 - se nessun test è settato
-			1 - se solo uno dei due è settato e quindi vi è una mancanza
-			2 - se tutti i test son stati settati
-		mentre per i soli figli ritorna i valori 
-			0 - se nessun test è stato settato
-			2 - se tutti i test son stati settati
+		Return state of validation and system test (0, 1, 2, 10, 11, 12);
+		0 - Sytem and Validation test not setted;
+		1 - Only Valdation test setted;
+		2 - Validation test set but incomplete;
+		10 - Only System test setted;
+		11 - System and Validation test setted;
+		12 - System and Validation test setted but Validation isset(var) incomplete.
 	*/
-	$idSplit = explode(".",$id);
-	$dad = 0; if(count($idSplit) == 1) $dad = 1; 
-	if(!$dad){
-		$kv = "select * from Test where object = '$id' and type='validation'";
-		$q = mysqli_query(connect(),$kv) or die("chlid");
-		if(mysqli_num_rows($q) == 1) return 2;
-		else return 0;
-	} else {
-		$k = "select * from Test where object = '$id'";
-		$q = mysqli_query(connect(),$k);
-		return mysqli_num_rows($q);
+	
+	$kV = "select test, requirement from ValidationTest where requirement = '" . $id . "'";
+	$kS = "select requirement from SystemTests where requirement = '" . $id . "'";
+	$q = mysqli_query(connect(), $kS) or die("Errore " . $kS);
+	$c = 0;
+	if(mysqli_num_rows($q) > 0) 
+		$c += 10;
+
+	$q = mysqli_query(connect(), $kV) or die("Errore " . $kS);
+	if(mysqli_num_rows($q) > 0) {
+		$c++;
+		$v = $q->fetch_array();
+		$q = mysqli_query(connect(), "select test from ValidationTestStep where test = '" . $v[0] . "'") or die("Err ");
+		if(mysqli_num_rows($q) == 0)
+			$c++;
 	}
+	return $c;
 }
 
 
