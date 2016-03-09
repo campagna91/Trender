@@ -43,6 +43,7 @@ function sent(section, type, dataSent){
 
 		case('backups'):
 			path = "cgi-bin/__ajaxBackups.php";
+			break;
 
 		case('glossary'):
 			path = "cgi-bin/__ajaxGlossary.php";
