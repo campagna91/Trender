@@ -188,11 +188,17 @@
 			break;
 
 		case('validationTestInsert'):
+			$data[2] = mysqli_real_escape_string(connect(), $data[2]);
 			$k = "insert into ValidationTest values ('$data[0]', '$data[1]', '$data[2]', '$data[3]', '$data[4]')";
 			break;
 
+		case('validationTestDelete'):
+			$k = "delete from ValidationTest where requirement = '$data[0]'";
+			break;
+
 		case('validationTestStepInsert'):
-			$k = "insert into ValidationTestStep values ('$data[0]', '$data[1]', '$data[2]')";
+			$data[2] = mysqli_real_escape_string(connect(), $data[2]);
+			$k = "insert into ValidationTestStep values ('$data[0]', $data[1], '$data[2]')";
 			break;
 
 		case('validationTestUpdate'):
@@ -205,9 +211,9 @@
 	}
 	if($k != "") {
 		if(!mysqli_query($link, $k)) 
-			echo "ERROR ". $typeRequest ."\n" . $k;
+			echo "ERROR ". $typeRequest ."\n" . $k . mysql_error();
 		else {
-			echo "OPERAZIONE ESEGUITA CON SUCCESSO";
+			echo "OPERAZIONE ESEGUITA CON SUCCESSO " . $k;
 		}
 	}
 ?>
