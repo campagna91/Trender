@@ -197,20 +197,22 @@ $(document).on("click", "#requirementValidationTestInsertion, #requirementValida
 		];
 		sent('requirements', 'validationTestInsert', data);
 
-		$(this).attr('id', 'requirementValidationTestUpdate');
-		var step = 1;
+		setTimeout(function() {
+			$(this).attr('id', 'requirementValidationTestUpdate');
+			var step = 1;
 
-		$('#requirementValidationTests .step input').each(function(i) {
-			if($(this).val() != '') {
-				var data = [
-					'TV' + $("#id").text().substr(1),
-					step,
-					$(this).val()
-				];
-				step++;
-			sent('requirements', 'validationTestStepInsert', data);
-			}
-		});
+			$('#requirementValidationTests .step input').each(function(i) {
+				if($(this).val() != '') {
+					var data = [
+						'TV' + $("#id").text().substr(1),
+						step,
+						$(this).val()
+					];
+					step++;
+				sent('requirements', 'validationTestStepInsert', data);
+				}
+			});
+		}, 500);
 	}
 });
 
