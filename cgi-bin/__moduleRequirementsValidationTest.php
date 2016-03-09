@@ -38,7 +38,7 @@
 		<?
 			$q = mysqli_query(connect(), $kValidationTestStep) or die("ERRORE: " . $kValidationTestStep);
 			while($v = $q->fetch_array()) {
-				echo "<div class='input-field col s10 offset-s1 step'><p> $v[0]°</p><a class='btn red stepDelete'><i class='material-icons'>delete</i></a><input class='col s10' value='$v[1]' type='text'></div>";
+				echo "<div class='input-field col s10 offset-s1 step'><p> $v[0]°</p><a class='btn red stepDelete'><i class='material-icons'>delete</i></a><input class='col s10' value=\"$v[1]\" type='text'></div>";
 			}
 			if($n > 0)
 				echo "<a id='requirementValidationTestUpdate' class='col s12 btn-large'>Save</a>";
