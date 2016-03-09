@@ -179,8 +179,15 @@ $(document).on("click", ".stepDelete", function() {
 	});
 });
 
-$(document).on("click", "#requirementValidationTestInsertion", function() {
+$(document).on("click", "#requirementValidationTestInsertion, #requirementValidationTestUpdate", function() {
 	if(formIsValid('requirementValidationTests')) {
+		// remove previous test saved
+		var data = [
+			$("#id").text()
+		];
+		sent('requirements', 'validationTestDelete', data);
+
+		// inset new test or updated test
 		var data = [
 			$("#id").text(),
 			'TV' + $("#id").text().substr(1),
@@ -189,35 +196,10 @@ $(document).on("click", "#requirementValidationTestInsertion", function() {
 			$("#requirementValidationTestSatisfied").val()
 		];
 		sent('requirements', 'validationTestInsert', data);
+
 		$(this).attr('id', 'requirementValidationTestUpdate');
 		var step = 1;
-		$('#requirementValidationTests .step input').each(function(i) {
-			if($(this).val() != '') {
-				var data = [
-					'TV' + $("#id").text().substr(1),
-					step,
-					$(this).val()
-				];
-				step++;
-			sent('requirements', 'validationTestStepInsert', data);
-			}
-		});
-	}
-});
 
-$(document).on("click", "#requirementValidationTestUpdate", function() {
-	if(formIsValid('requirementValidationTests')) {
-		var data = [
-			$("#id").text(),
-			'TV' + $("#id").text().substr(1),
-			$("#requirementValidationTestDescription").val(),
-			$("#requirementValidationTestImplemented").val(),
-			$("#requirementValidationTestSatisfied").val()
-		];
-		sent('requirements', 'validationTestUpdate', data);
-		data = ['TV' + $("#id").text().substr(1)];
-		sent('requirements', 'validationTestStepDeleteAll', data);
-		var step = 1;
 		$('#requirementValidationTests .step input').each(function(i) {
 			if($(this).val() != '') {
 				var data = [
