@@ -2,7 +2,7 @@
 	$kValidationTest = "select test, description, implemented, satisfied from ValidationTest where requirement = '$id'";
 	$q = mysqli_query(connect(), $kValidationTest) or die("ERRORE: " . $kValidationTest);
 	$vValidationTest = $q->fetch_array();
-	$kValidationTestStep = "select stepNumber, stepDescription from ValidationTestStep where test = '$vValidationTest[0]'";
+	$kValidationTestStep = "select stepNumber, stepDescription from ValidationTestStep where test = '$vValidationTest[0]' order by LENGTH(stepNumber), stepNumber";
 	$n = mysqli_num_rows($q);
 ?>
 <div class="row">
