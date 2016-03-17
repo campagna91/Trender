@@ -27,7 +27,12 @@ Per l'installazione del servizio sono necessari 4 semplici accorgimenti.
 
 Le credenziali per il servizio sono di default settate ad "admin" sia per lo username che per la password. Per modificarle sarà sufficiente recarsi sempre nel file "dataNeed.sql" e modificarle nella prima riga.
 
+**NB:** abilitare il _short tag_ nel file php.ini altrimenti non verrà visualizzato nulla nelle pagine.
+
 ### BUG
-Un bug noto è non sanato è stato riscontrato nel nome dei metodi per il quale è richiesto lo stile di scrittura CamelCase. Per altre segnalazioni (se non risolvibili da voi visto che siete informatici) scrivete a campagna.simone.91@gmail.com con oggetto "BUG_Trender"
+* **CamleCase**: nn bug noto e non sanato è stato riscontrato nel nome dei metodi per il quale è richiesto lo stile di scrittura CamelCase;
+* **Errori visivi**: nell'inserimento dei dati (inserimento di una nuova entità o correlazione di un'entità esistente con altre) i campi mancanti vengono segnalati di rosso fuorché i campi di tipo _select_ che per limiti imposti dalla libreria grafica non permettono la loro evidenziazione di rosso.
+
+Per altre segnalazioni (se non risolvibili da voi visto che siete informatici) scrivete a campagna.simone.91@gmail.com con oggetto "BUG_Trender"
 
 
