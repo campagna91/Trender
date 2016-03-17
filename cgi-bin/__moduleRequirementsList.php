@@ -52,3 +52,7 @@
 		</tbody>
 	</table>
 </div>
+
+<script>
+//truncate('mainList');
+</script>
