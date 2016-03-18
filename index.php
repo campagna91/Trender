@@ -27,13 +27,16 @@ require_once('./cgi-bin/__module.php');
   <body>
     <?
       logout();
-      if(isset($_SESSION['user']) && $_SESSION['user'] != "")
+      if(isset($_SESSION['user']) && $_SESSION['user'] != "") {
         modHeader();
+        include_once 'cgi-bin/__moduleIndexResume.php';
+      }
       elseif(isset($_POST['utente']) && login($_POST['utente'],$_POST['password'])) {
         $_SESSION['user'] = $_POST['utente'];
         modHeader();
+        include_once 'cgi-bin/__moduleIndexResume.php';
       } else
-        modLogin(); 
+        modLogin();
     ?>
 </body>
 </html>
