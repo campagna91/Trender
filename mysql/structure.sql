@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS `Trender`;
+fDROP DATABASE IF EXISTS `Trender`;
 CREATE DATABASE `Trender`;
 USE Trender;
 
@@ -211,15 +211,6 @@ CREATE TABLE `UnitTestClassesMethods` (
   FOREIGN KEY (`class`, `signature`, `returnType`, `package`) REFERENCES `ClassMethods` (`class`, `signature`, `returnType`, `package`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-# GLOSSARY
-
-DROP TABLE IF EXISTS `Glossario`;
-CREATE TABLE `Glossario` (
-  `voice` varchar(100) NOT NULL,
-  `definition` longtext NOT NULL,
-  PRIMARY KEY (`voice`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 # RELATION: CLASS INHERITANCE
 
 DROP TABLE IF EXISTS `ClassInheritance`;
@@ -366,7 +357,7 @@ CREATE TABLE `RequirementsVerbal` (
 # PRINT SETTINGS
 
 DROP TABLE IF EXISTS `Settings_prints`;
-CREATE TABLE `Settings_Prints` (
+CREATE TABLE `Settings_prints` (
   `voice` VARCHAR(100) NOT NULL,
   `active` BOOLEAN DEFAULT TRUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
