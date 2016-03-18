@@ -1,15 +1,13 @@
 div#moduleResume{
+	width:80%;
 	text-align: center;
+	margin:0 auto;
 }
 div#moduleResume div{
-	background-color:rgba(0,0,0,0.5);
 	color:white;
-	width:250px;
-	margin:20px;
 	font-size:14px;
 	box-shadow:0px 0px 10px 0px black;
-	display: inline-block;
-	vertical-align: middle;	
+	margin:40px;
 }
 div#moduleResume div > *{
 	padding:10px;
@@ -23,11 +21,22 @@ div#moduleResume div h2{
 	text-align: center;
 }
 div#moduleResume div h4{
-	background-color:rgba(255,100,30,0.5);
+	color:rgba(255,100,30,0.5);
 	font-size:16px;
+	display:inline;
 }
-div#moduleResume div h3{
-	background-color:rgba(0,255,0,0.5);
+div#moduleResume > div > p > h3{
+	color:rgba(0,255,0,0.5);
+	font-size:16px;
+	display:inline-block;
+}
+
+p span.g {
+	color:rgba(0,255,0,0.5);
 	font-size:16px;
 }
 
+p span.r {
+	color:rgba(255,100,30,0.5);
+	font-size:16px;
+}
